@@ -24,7 +24,7 @@ function updateFilesInRange($range, $pathToFiles)
     # 1. It is not a directory
     # 2. It was created after the start of the date range
     # 3. It was created before the end of the date range
-    Get-ChildItem -Path $pathToFiles -Recurse -Force | Where-Object { !$_.PSIsContainer -and  $_.CreationTime -gt $range.start -and $_.CreationTime -lt $range.end} | Foreach-Object{
+    Get-ChildItem -Path $pathToFiles -Recurse -Force | Where-Object { !$_.PSIsContainer -and $_.Name -like "*.avi" -and  $_.CreationTime -gt $range.start -and $_.CreationTime -lt $range.end} | Foreach-Object{
        
         $filePath = $_.FullName
         
