@@ -125,7 +125,7 @@ function updateFilesInRange($range)
 {
     
     $pathToFiles = $range.folderPath
-
+	$stream = [System.IO.StreamWriter] "data.txt"
     
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
 
@@ -135,11 +135,27 @@ function updateFilesInRange($range)
 
         $folderDate = extractDateFromFolder $_.Name
 
-        if($folderDate -ne $null -and $folderDate -ge $range.start -and $folderDate -le $range.end)
+	$dateDiff = ($folderDate - $range.start)
+	
+	Write-Host $dateDiff.Days	
+	
+	##>
+	if ($folderDate -ne $null -and $dateDiff.Days -le 1 -and $dateDiff.Days -ge 1)
+	{
+		Write-Host ("The date " + $folderDate + " passed!")
+	}
+	##>
+        if($folderDate -ne $null -and $dateDiff.Days -eq 0 -or ($folderDate -ge $range.start -and $folderDate -le $range.end))
         {
             Get-ChildItem $_.FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object{
        
            $videoCreationDate = extractDate $_.Name
+	
+	
+	Write-Host $_.Name
+	Write-Host $videoCreationDate
+	Write-Host ("Start " + $range.start)
+	Write-Host ("End " + $range.end)
 
            if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
            {
@@ -158,7 +174,7 @@ function updateFilesInRange($range)
                 $convertMessage = ("Converting video with argument list " + $ArgumentList)
         
                 Write-Host $convertMessage
-
+		 $stream.WriteLine($convertMessage)
                 # Start-Process -FilePath C:\Users\muengrcerthospkinect\Desktop\Kinect\ffmpeg.exe -ArgumentList $ArgumentList -Wait -NoNewWindow;
            }
 
@@ -167,6 +183,8 @@ function updateFilesInRange($range)
 
         Write-Host $folderDate
     }
+	
+$stream.close()
 }
 function extractDateFromFolder($folderName)
 {
