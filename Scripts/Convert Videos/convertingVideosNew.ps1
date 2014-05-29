@@ -200,7 +200,8 @@ function updateFilesInRange($range)
 }
 function extractDateFromFolder($folderName)
 {
-	$dateTokens = $folderName -split "_"
+
+    $dateTokens = $folderName -split "_"
 
 	if ($dateTokens.Count -ne 3)
 	{
@@ -209,7 +210,7 @@ function extractDateFromFolder($folderName)
 	
 	$dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
 	
-	$dateObject = [dateTime]::ParseExact($timeString, "MM/dd/yyyy" , $null)
+	$dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
 	
 	Write-Host $dateObject
 
@@ -253,6 +254,38 @@ function targetTesting
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
 
         $folderDate = extractDateFromFolder $_.Name
+
+        if($folderDate -ne $null -and $folderDate -ge $startDate -and $folderDate -le $endDate)
+        {
+            Get-ChildItem $_.FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object{
+       
+       
+
+           $videoCreationDate = extractDate $_.Name
+
+           if($videoCreationDate -ne $null -and $videoCreationDate -ge $startDate -and $videoCreationDate -le $endDate)
+           {
+                # $newName = $_.Basename + ".mp4";
+                #C:\Users\Bigben\Desktop\ffmpeg-20140519-git-76191c0-win64-static\bin\ffmpeg.exe "$_" -f mp4 -r 25 -s 320*240 -b 768 -ar 44000 -ab 112 $newName;
+            
+                # Here you would use the file path along with ffmpeg to do the conversion
+                $newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
+     
+                # Declare the command line arguments for ffmpeg.exe
+                $ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
+     
+        
+        
+                # Display message show user the arguments list of the conversion
+                $convertMessage = ("Converting video with argument list " + $ArgumentList)
+        
+                Write-Host $convertMessage
+
+                # Start-Process -FilePath C:\Users\muengrcerthospkinect\Desktop\Kinect\ffmpeg.exe -ArgumentList $ArgumentList -Wait -NoNewWindow;
+           }
+
+   }
+        }
 
         Write-Host $folderDate
     }
