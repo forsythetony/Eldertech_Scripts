@@ -246,9 +246,10 @@ function targetTesting
 
     $pathToFiles = ($folderPath + $userID)
 
-    Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"} ForEach {
-        Write-Host $_.FullName
-    }
+    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
+
+    Write-Host $theChild
+
     # Selection all items within the $pathToFiles directory that meet the following conditions...
     # 1. It is not a directory
     # 2. It was created after the start of the date range
