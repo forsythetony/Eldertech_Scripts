@@ -251,7 +251,10 @@ function targetTesting
     Write-Host $theChild.FullName
 
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
-        Write-Host $_.FullName
+
+        $folderDate = extractDateFromFolder $_.Name
+
+        Write-Host $folderDate
     }
 
     # Selection all items within the $pathToFiles directory that meet the following conditions...
