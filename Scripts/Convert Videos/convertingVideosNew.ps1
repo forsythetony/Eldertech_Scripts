@@ -247,4 +247,6 @@ Write-Host ("End Date: " + $userData.end)
 Write-Host ("Folder path: " + $userData.folderPath)
 ##>
 
-updateFilesInRange $userData 
+# updateFilesInRange $userData 
+
+targetTesting
