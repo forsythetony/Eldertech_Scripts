@@ -238,8 +238,8 @@ function targetTesting
  
  
 # Main program
- 
-$userData = getUserData
+
+# $userData = getUserData
  
 <## 
 Write-Host ("Start Date: " + $userData.start)
