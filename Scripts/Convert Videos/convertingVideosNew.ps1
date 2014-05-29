@@ -233,20 +233,22 @@ function extractDate($path)
 } 
 function targetTesting
 {
-    $pathToFiles = "D:\mcp\100"
+    $folderPath = "D:\mcp\"
     $userID = "100"
     $startDate = [dateTime]::ParseExact("07/01/2013", "MM/dd/yyyy" , $null)
     $endDate = [dateTime]::ParseExact("10/31/2013", "MM/dd/yyyy" , $null)
 
     
-    Write-Host("The path to folder is " + $pathToFiles)
+    Write-Host("The path to folder is " + $folderPath)
     Write-Host ("The user ID is " + $userID)
     Write-Host("The start date is " + $startDate)
     Write-Host("The end date is " + $endDate)
 
+    $pathToFiles = ($folderPath + $userID)
 
-
- 
+    Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"} ForEach {
+        Write-Host $_.FullName
+    }
     # Selection all items within the $pathToFiles directory that meet the following conditions...
     # 1. It is not a directory
     # 2. It was created after the start of the date range
