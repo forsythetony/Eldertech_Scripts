@@ -235,7 +235,7 @@ function targetTesting
 {
     $pathToFiles = "D:\mcp\100"
     $userID = "100"
-    $startDate = [dateTime]::ParseExact("7/1/2013", "MM/dd/yyyy" , $null)
+    $startDate = [dateTime]::ParseExact("07/01/2013", "MM/dd/yyyy" , $null)
     $endDate = [dateTime]::ParseExact("10/31/2013", "MM/dd/yyyy" , $null)
 
     
