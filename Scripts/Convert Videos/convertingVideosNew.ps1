@@ -231,16 +231,20 @@ function extractDate($path)
 
   return $dateObject
 } 
- 
+function targetTesting
+{
+    Write-Host "This is a function to target things!"
+}
  
  
 # Main program
  
 $userData = getUserData
  
- 
+<## 
 Write-Host ("Start Date: " + $userData.start)
 Write-Host ("End Date: " + $userData.end)
 Write-Host ("Folder path: " + $userData.folderPath)
+##>
 
 updateFilesInRange $userData 
