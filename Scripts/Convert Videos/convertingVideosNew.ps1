@@ -126,77 +126,47 @@ function updateFilesInRange($range)
     
     $pathToFiles = $range.folderPath
 
- 
-    # Selection all items within the $pathToFiles directory that meet the following conditions...
-    # 1. It is not a directory
-    # 2. It was created after the start of the date range
-    # 3. It was created before the end of the date range
-    <##
-    Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"} | ForEach { Get-ChildItem -Path $_ -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object{
-       
-       
+    
+    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
 
-       $videoCreationDate = extractDate $_.Name
+    Write-Host $theChild.FullName
 
-       if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
-       {
-            # $newName = $_.Basename + ".mp4";
-            #C:\Users\Bigben\Desktop\ffmpeg-20140519-git-76191c0-win64-static\bin\ffmpeg.exe "$_" -f mp4 -r 25 -s 320*240 -b 768 -ar 44000 -ab 112 $newName;
+    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
+
+        $folderDate = extractDateFromFolder $_.Name
+
+        if($folderDate -ne $null -and $folderDate -ge $range.start -and $folderDate -le $range.end)
+        {
+            Get-ChildItem $_.FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object{
+       
+           $videoCreationDate = extractDate $_.Name
+
+           if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
+           {
+                # $newName = $_.Basename + ".mp4";
+                #C:\Users\Bigben\Desktop\ffmpeg-20140519-git-76191c0-win64-static\bin\ffmpeg.exe "$_" -f mp4 -r 25 -s 320*240 -b 768 -ar 44000 -ab 112 $newName;
+            
+                # Here you would use the file path along with ffmpeg to do the conversion
+                $newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
+     
+                # Declare the command line arguments for ffmpeg.exe
+                $ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
+     
         
-            # Here you would use the file path along with ffmpeg to do the conversion
-            $newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
- 
-            # Declare the command line arguments for ffmpeg.exe
-            $ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
- 
-    
-    
-            # Display message show user the arguments list of the conversion
-            $convertMessage = ("Converting video with argument list " + $ArgumentList)
-    
-            Write-Host $convertMessage
+        
+                # Display message show user the arguments list of the conversion
+                $convertMessage = ("Converting video with argument list " + $ArgumentList)
+        
+                Write-Host $convertMessage
 
-            # Start-Process -FilePath C:\Users\muengrcerthospkinect\Desktop\Kinect\ffmpeg.exe -ArgumentList $ArgumentList -Wait -NoNewWindow;
-       }
+                # Start-Process -FilePath C:\Users\muengrcerthospkinect\Desktop\Kinect\ffmpeg.exe -ArgumentList $ArgumentList -Wait -NoNewWindow;
+           }
 
-   }}
-   ##>
-   Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"} | Foreach {
-
-
-
-
-	$folderDate = extractDateFromFolder $_.Name
-	
-	if($folderDate -ne $null -and $folderDate -le $range.end -ge $range.start)
-	{
-		Get-ChildItem -Path $_FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | ForEach-Object {
-			Write-Host $_.FullName
-      			 $videoCreationDate = extractDate $_.Name
-
-		       if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
-       			{
-            			# $newName = $_.Basename + ".mp4";
-            			#C:\Users\Bigben\Desktop\ffmpeg-20140519-git-76191c0-win64-static\bin\ffmpeg.exe "$_" -f mp4 -r 25 -s 320*240 -b 768 -ar 44000 -ab 112 $newName;
-        			Write-Host $_.FullName
-            			# Here you would use the file path along with ffmpeg to do the conversion
-            			$newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
- 
- 			           # Declare the command line arguments for ffmpeg.exe
-            			$ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
- 
-    
-    
- 			           # Display message show user the arguments list of the conversion
-            			$convertMessage = ("Converting video with argument list " + $ArgumentList)
-    
-    			        Write-Host $convertMessage
-
-		            # Start-Process -FilePath C:\Users\muengrcerthospkinect\Desktop\Kinect\ffmpeg.exe -ArgumentList $ArgumentList -Wait -NoNewWindow;
-       			}
-		}
-	}
    }
+        }
+
+        Write-Host $folderDate
+    }
 }
 function extractDateFromFolder($folderName)
 {
@@ -366,7 +336,7 @@ function targetTesting
  
 # Main program
 
-# $userData = getUserData
+$userData = getUserData
  
 <## 
 Write-Host ("Start Date: " + $userData.start)
@@ -374,6 +344,6 @@ Write-Host ("End Date: " + $userData.end)
 Write-Host ("Folder path: " + $userData.folderPath)
 ##>
 
-# updateFilesInRange $userData 
+updateFilesInRange $userData 
 
-targetTesting
+# targetTesting
