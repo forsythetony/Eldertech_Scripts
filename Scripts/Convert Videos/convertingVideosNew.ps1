@@ -248,7 +248,11 @@ function targetTesting
 
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
 
-    Write-Host $theChild
+    Write-Host $theChild.FullName
+
+    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
+        Write-Host $_.FullName
+    }
 
     # Selection all items within the $pathToFiles directory that meet the following conditions...
     # 1. It is not a directory
