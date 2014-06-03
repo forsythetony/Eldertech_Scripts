@@ -167,9 +167,87 @@ function updateFilesTest($pathToUse)
             Get-ChildItem -Path $_.FullName | Foreach {
                renameFile $_ $firstRange
             }
+
+            changeFolderDate $_ $folderDate $firstRange
         }
+
+
         
     }   
+}
+function changeFolderDate($path, $folderDate, $rangeInfo)
+{
+    $folderDirectory = $path.DirectoryName
+
+    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $folderDate
+
+    $daysDiff = $dateDifference.Days
+
+    $newFolderDate = $folderDate.AddDays($daysDiff)
+
+    $nfDateString = convertDateToString $newFolderDate 2
+
+    Write-Host $nfDateString
+
+}
+function dateAsArray($date)
+{
+    $month = $date.Month
+    $days = $date.Days
+    $year = $date.Year
+
+    $dateArray = @{
+        "month" = $month;
+        "day" = $days;
+        "years" = $year;
+    }
+
+    return $dateArray
+}
+function convertDateToString($date, $option)
+{
+    switch ($option)
+    {
+        1 {
+            $sep = "/"
+        }
+
+        2 {
+           $sep = "_" 
+        }
+
+        default {
+            $sep = "/"
+        }
+    }
+
+
+    $dateArray = dateAsArray $date
+
+
+    if($dateArray.month -ge 10)
+    {
+        $monthMod = ""
+    }
+    else
+    {
+        $monthMod = "0"
+    }
+
+    if ($dateArray.day - ge 10)
+    {
+        $dayMod = ""
+    }
+    else
+    {
+        $dayMod = "0"
+    }
+
+
+    $dateString = ($monthMod + $dateArray.month + $sep + $dayMod + $dateArray.day + $sep + $dateArray.year)
+
+    return $dateString
+
 }
 function getRanges($rangeOption)
 {
