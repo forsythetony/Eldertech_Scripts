@@ -215,4 +215,4 @@ function extractDate($path)
  
 #updateFilesTest
 
-getRanges 1
+getRanges 2
