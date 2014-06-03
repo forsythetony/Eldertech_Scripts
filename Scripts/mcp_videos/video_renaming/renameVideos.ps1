@@ -187,9 +187,10 @@ function changeFolderDate($path, $folderDate, $rangeInfo)
 
     $nfDateString = convertDateToString $newFolderDate 2
 
-    Write-Host ("The date to convert was " + $folderDate)
-    Write-Host $nfDateString
+    #Write-Host ("The date to convert was " + $folderDate)
+    #Write-Host $nfDateString
 
+    Rename-Item $path.FullName -newName $nfDateString
 }
 function dateAsArray($date)
 {
