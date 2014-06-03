@@ -191,89 +191,7 @@ function updateFilesTest($pathToUse)
         }
     }
 }
-function changeFolderDate($path, $folderDate, $rangeInfo)
-{
-    $folderDirectory = $path.DirectoryName
 
-    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $folderDate
-
-    $daysDiff = $dateDifference.Days
-
-    $newDate = $rangeInfo.toStart
-
-    $newDate = $newDate.AddDays($daysDiff)
-
-    $nfDateString = convertDateToString $newDate 2
-
-    #Write-Host ("The date to convert was " + $folderDate)
-    #Write-Host $nfDateString
-
-<##
-    Write-Host ("The folder date was " + $folderDate)
-    Write-Host ("The folder path was " + $path.FullName)
-    Write-Host ("The new date string was " + $nfDateString)
-##>
-    Rename-Item $path.FullName -newName $nfDateString
-}
-function dateAsArray($date)
-{
-    $month = $date.Month
-    $days = $date.Day
-    $year = $date.Year
-
-    $dateArray = @{
-        "month" = $month;
-        "day" = $days;
-        "year" = $year;
-    }
-
-    return $dateArray
-}
-function convertDateToString($date, $option)
-{
-    switch ($option)
-    {
-        1 {
-            $sep = "/"
-        }
-
-        2 {
-           $sep = "_" 
-        }
-
-        default {
-            $sep = "/"
-        }
-    }
-
-
-    $dateArray = dateAsArray $date
-
-
-    if($dateArray.month -ge 10)
-    {
-        $monthMod = ""
-    }
-    else
-    {
-        $monthMod = "0"
-    }
-
-    if ($dateArray.day -ge 10)
-    {
-        $dayMod = ""
-    }
-    else
-    {
-        $dayMod = "0"
-    }
-
-
-    $dateString = ($monthMod + $dateArray.month + $sep + $dayMod + $dateArray.day + $sep + $dateArray.year)
-
-    return $dateString
-
-}
 function getRanges($rangeOption)
 {
     
@@ -420,6 +338,28 @@ function renameFile($path, $rangeInfo)
 
 
 }
+
+function addFirstRange($path, $rangeInfo, $folderDate)
+{
+    Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo + " and $folderDate = " + $folderDate)
+
+    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
+
+    $newDate = $rangeInfo.toStart
+
+    $newDate = $newDate.AddDays($dateDifference.Days)
+
+    $newDateString = convertDateToString $newDate 2
+
+    $folderDirectory = $path.DirectoryName
+
+    Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
+}
+
+#
+# Utility Functions
+#
+
 function extractDateFromFolder($folderName)
 {
  
@@ -437,6 +377,109 @@ function extractDateFromFolder($folderName)
                 # Write-Host $dateObject
  
                 return $dateObject
+}
+
+function changeFolderDate($path, $folderDate, $rangeInfo)
+{
+    $folderDirectory = $path.DirectoryName
+
+    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $folderDate
+
+    $daysDiff = $dateDifference.Days
+
+    $newDate = $rangeInfo.toStart
+
+    $newDate = $newDate.AddDays($daysDiff)
+
+    $nfDateString = convertDateToString $newDate 2
+
+    Rename-Item $path.FullName -newName $nfDateString
+}
+
+function dateAsArray($date)
+{
+    $month = $date.Month
+    $days = $date.Day
+    $year = $date.Year
+
+    $dateArray = @{
+        "month" = $month;
+        "day" = $days;
+        "year" = $year;
+    }
+
+    return $dateArray
+}
+
+function convertDateToString($date, $option)
+{
+    switch ($option)
+    {
+        1 {
+            $sep = "/"
+        }
+
+        2 {
+           $sep = "_" 
+        }
+
+        default {
+            $sep = "/"
+        }
+    }
+
+
+    $dateArray = dateAsArray $date
+
+
+    if($dateArray.month -ge 10)
+    {
+        $monthMod = ""
+    }
+    else
+    {
+        $monthMod = "0"
+    }
+
+    if ($dateArray.day -ge 10)
+    {
+        $dayMod = ""
+    }
+    else
+    {
+        $dayMod = "0"
+    }
+
+
+    $dateString = ($monthMod + $dateArray.month + $sep + $dayMod + $dateArray.day + $sep + $dateArray.year)
+
+    return $dateString
+
+}
+#
+# Main program
+#
+
+$pathOption = Read-Host "Testing path (1) or echo path (2)"
+
+switch ($pathOption) {
+    1 {
+        $path = "C:\Users\arfv2b\Desktop\testingThings\"
+    }
+
+    2 {
+        $path = "\\echo\mcp\100\"
+    }
+
+    3 {
+        $folderName =  Read-Host "Enter the folder number"
+
+        $path = ("C:\Users\arfv2b\Desktop\testingThings" + $folderName + "\")
+    }
+
+    default {
+         $path = "C:\Users\arfv2b\Desktop\testingThings\"   
+    }
 }
 function extractDate($path)
 {
@@ -477,58 +520,6 @@ function convertToDate($dateString, $option)
 
     return $dateObject
 }
-function addFirstRange($path, $rangeInfo, $folderDate)
-{
-    Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo + " and $folderDate = " + $folderDate)
-
-    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
-
-    $newDate = $rangeInfo.toStart
-
-    $newDate = $newDate.AddDays($dateDifference.Days)
-
-    $newDateString = convertDateToString $newDate 2
-
-    $folderDirectory = $path.DirectoryName
-
-    Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
-}
-# Main program
- 
-
-
-$pathOption = Read-Host "Testing path (1) or echo path (2)"
-
-switch ($pathOption) {
-    1 {
-        $path = "C:\Users\arfv2b\Desktop\testingThings\"
-    }
-
-    2 {
-        $path = "\\echo\mcp\100\"
-    }
-
-    3 {
-        $folderName =  Read-Host "Enter the folder number"
-
-        $path = ("C:\Users\arfv2b\Desktop\testingThings" + $folderName + "\")
-    }
-
-    default {
-         $path = "C:\Users\arfv2b\Desktop\testingThings\"   
-    }
-}
-
 updateFilesTest $path
-
-<##
-$datesDictionary = getRanges 1
-
-Write-Host ("The from start date is " + $datesDictionary.fromStart)
-Write-Host ("The from end date is " + $datesDictionary.fromEnd)
-Write-Host ("The to start date is " + $datesDictionary.toStart)
-Write-Host ("The to end date is " + $datesDictionary.toEnd)
-##>
-
 
 
