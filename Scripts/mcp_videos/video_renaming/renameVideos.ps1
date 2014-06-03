@@ -141,7 +141,7 @@ function updateFilesInRange($range)
 }
 function updateFilesTest
 {
- $pathToFiles = "\\echo\mcp\100\"
+ $pathToFiles = "C:\Users\arfv2b\Desktop\testingThings\"
    
    $firstRange = getRanges 1
    $secondRange = getRanges 2
