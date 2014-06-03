@@ -479,7 +479,7 @@ function convertToDate($dateString, $option)
 }
 function addFirstRange($path, $rangeInfo, $folderDate)
 {
-    Write-Host ("addFirstRange is running with $path = " + $path " and $rangeInfo = " + $rangeInfo + " and $folderDate = " + $folderDate)
+    Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo + " and $folderDate = " + $folderDate)
 
     $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
 
