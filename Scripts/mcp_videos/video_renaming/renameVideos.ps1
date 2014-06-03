@@ -286,6 +286,7 @@ function renameFile($path, $rangeInfo)
 
         $newDateString = ($nameTokens[0] + "-" + $monthMod + $month + "_" + $daysMod + $days + "_" + $year + "-" + $nameTokens[2])
 
+        Write-Host ("The old date string was " + $path.Name)
         Write-Host ("The new date string is " + $newDateString)
     }
     
