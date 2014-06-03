@@ -302,8 +302,10 @@ function renameFile($path, $rangeInfo)
         $newDateString = ($directory + "\" + $newDateString)
 
 
-        Write-Host ("The old date string was " + $path.FullName)
-        Write-Host ("The new date string is " + $newDateString)
+        #Write-Host ("The old date string was " + $path.FullName)
+        #Write-Host ("The new date string is " + $newDateString)
+
+        Rename-Item $path.FullName $newDateString
     }
     
 
