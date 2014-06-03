@@ -200,7 +200,7 @@ function dateAsArray($date)
     $dateArray = @{
         "month" = $month;
         "day" = $days;
-        "years" = $year;
+        "year" = $year;
     }
 
     return $dateArray
