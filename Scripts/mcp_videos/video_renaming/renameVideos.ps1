@@ -154,7 +154,7 @@ function updateFilesTest
  
         $folderDate = extractDateFromFolder $_.Name
  
-        if ($folderDate -ge firstRange.fromStart -and $folderDate -le firstRange.toEnd)
+        if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.toEnd)
         {
             if ($folderDate -ne $null -and $folderDate)
             {
