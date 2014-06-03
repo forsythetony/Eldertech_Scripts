@@ -178,10 +178,17 @@ function updateFilesTest($pathToUse)
 
             changeFolderDate $_ $folderDate $secondRange
         }
-
-
-        
     }   
+
+    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
+
+        $folderDate = extractDateFromFolder $_.Name
+
+        if($folderDate -ge $thirdRange.toStart -and $folderDate -le $thirdRange.toEnd)
+        {
+            addFirstRange $_ $thirdRange $folderDate
+        }
+    }
 }
 function changeFolderDate($path, $folderDate, $rangeInfo)
 {
@@ -289,8 +296,11 @@ function getRanges($rangeOption)
             $toEndDateString = "05/31/2014"
         }
         3 {
-            $toStartDateString = "02/01/2014"
             $fromStartDateString = "02/05/2014"
+            $fromEndDateString = "02/08/2014"
+
+            $toStartDateString = "02/01/2014"
+            $toEndDateString = "02/04/2014"
         }
         default {
             $fromStartDateString = $null
