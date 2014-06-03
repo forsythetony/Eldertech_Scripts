@@ -228,6 +228,14 @@ function getRanges($rangeOption)
 }
 function renameFile($path)
 {
+    
+    $fileType = $path.Extension
+
+    Write-Host ("The file is of type " + $fileType)
+
+
+
+
     $nameTokens = $path.Name -split "-"
 
     for( $i = 0; $i -lt $nameTokens.count; $i++)
