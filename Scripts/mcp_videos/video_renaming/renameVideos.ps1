@@ -150,12 +150,13 @@ function updateFilesTest
    # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
  
+    Write-Host $firstRange.fromStart
+    Write-Host $firstRange.fromEnd
+    
+        
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
  
         $folderDate = extractDateFromFolder $_.Name
-
-        Write-Host $firstRange.fromStart
-        Write-Host $firstRange.fromEnd
 
         Write-Host $folderDate
 
