@@ -291,7 +291,7 @@ function renameFile($path, $rangeInfo)
 
         $fullNameBase = ""
 
-        for($i = 0; i < $fullNameSplit.count - 1 ; $i++)
+        for($i = 0; i -lt $fullNameSplit.count - 1 ; $i++)
         {
             $fullNameBase = ($fullNameBase + "\" + $fullNameSplit[$i])
         }
