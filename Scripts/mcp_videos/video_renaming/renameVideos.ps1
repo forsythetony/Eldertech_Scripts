@@ -384,7 +384,7 @@ switch ($pathOption) {
     }
 
     3 {
-        $folderName = "Enter the folder number"
+        $folderName =  Read-Host "Enter the folder number"
 
         $path = ("C:\Users\arfv2b\Desktop\testingThings" + $folderName + "\")
     }
