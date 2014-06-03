@@ -143,6 +143,9 @@ function updateFilesTest
 {
  $pathToFiles = "\\echo\mcp\100\"
    
+   $firstRange = getRanges 1
+   $secondRange = getRanges 2
+
 
    # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
@@ -151,15 +154,14 @@ function updateFilesTest
  
         $folderDate = extractDateFromFolder $_.Name
  
-        if ($folderDate -ne $null -and $folderDate)
+        if ($folderDate -ge firstRange.fromStart -and $folderDate -le firstRange.toEnd)
         {
-            Write-Host $folderDate
- 
+            if ($folderDate -ne $null -and $folderDate)
+            {
+                Write-Host $folderDate
+            }
         }
     }
-
-
-
 }
 function getRanges($rangeOption)
 {
@@ -257,7 +259,7 @@ $datesDictionary = getRanges 1
 
 Write-Host ("The from start date is " + $datesDictionary.fromStart)
 Write-Host ("The from end date is " + $datesDictionary.fromEnd)
-Write-Host ("The to start date " + $datesDictionary.toStart)
+Write-Host ("The to start date is " + $datesDictionary.toStart)
 Write-Host ("The to end date is " + $datesDictionary.toEnd)
 
 
