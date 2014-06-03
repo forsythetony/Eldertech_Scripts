@@ -184,6 +184,7 @@ function updateFilesTest($pathToUse)
 
         $folderDate = extractDateFromFolder $_.Name
 
+        # Write-Host "Second get-child is running"
         if($folderDate -ge $thirdRange.toStart -and $folderDate -le $thirdRange.toEnd)
         {
             addFirstRange $_ $thirdRange $folderDate
@@ -478,6 +479,8 @@ function convertToDate($dateString, $option)
 }
 function addFirstRange($path, $rangeInfo, $folderDate)
 {
+    Write-Host ("addFirstRange is running with $path = " + $path " and $rangeInfo = " + $rangeInfo + " and $folderDate = " + $folderDate)
+
     $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
 
     $newDate = $rangeInfo.toStart
