@@ -184,8 +184,7 @@ function updateFilesTest($pathToUse)
 
         $folderDate = extractDateFromFolder $_.Name
 
-        # Write-Host "Second get-child is running"
-        if($folderDate -ge $thirdRange.toStart -and $folderDate -le $thirdRange.toEnd)
+        if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
             addFirstRange $_ $thirdRange $folderDate
         }
