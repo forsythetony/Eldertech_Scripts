@@ -152,13 +152,13 @@ function updateFilesTest
  
     Write-Host $firstRange.fromStart
     Write-Host $firstRange.fromEnd
-    
+
         
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
  
         $folderDate = extractDateFromFolder $_.Name
 
-        Write-Host $folderDate
+        # Write-Host $folderDate
 
         <##
         if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.toEnd)
