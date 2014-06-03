@@ -234,7 +234,7 @@ function convertDateToString($date, $option)
         $monthMod = "0"
     }
 
-    if ($dateArray.day - ge 10)
+    if ($dateArray.day -ge 10)
     {
         $dayMod = ""
     }
