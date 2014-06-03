@@ -248,7 +248,9 @@ function renameFile($path, $rangeInfo)
 
         $dateDifference = $fileDate - $rangeInfo.fromStart
 
-        Write-Host = ("The duration was " + $dateDifference)
+        # Write-Host = ("The duration was " + $dateDifference)
+
+        Write-Host ("The date was " + $fileDate)
     }
     
 
