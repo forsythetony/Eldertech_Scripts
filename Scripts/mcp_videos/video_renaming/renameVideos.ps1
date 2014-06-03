@@ -161,7 +161,7 @@ function updateFilesTest($pathToUse)
         # Write-Host $folderDate
 
         
-        if (($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd) -or ($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd))
+        if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd)
         {
            
             Get-ChildItem -Path $_.FullName | Foreach {
@@ -169,6 +169,14 @@ function updateFilesTest($pathToUse)
             }
 
             changeFolderDate $_ $folderDate $firstRange
+        }
+        elseif($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd)
+        {
+            Get-ChildItem -Path $_.FullName | Foreach {
+               renameFile $_ $secondRange
+            }
+
+            changeFolderDate $_ $folderDate $secondRange
         }
 
 
