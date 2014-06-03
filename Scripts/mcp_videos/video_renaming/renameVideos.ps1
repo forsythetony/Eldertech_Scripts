@@ -139,17 +139,17 @@ function updateFilesInRange($range)
     }
  
 }
-function updateFilesTest
+function updateFilesTest($pathToUse)
 {
- $pathToFiles = "C:\Users\arfv2b\Desktop\testingThings\"
-   
-   $firstRange = getRanges 1
-   $secondRange = getRanges 2
+    $pathToFiles = $pathToUse
+
+    $firstRange = getRanges 1
+    $secondRange = getRanges 2
 
 
-   # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
+    # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
- 
+
     Write-Host $firstRange.fromStart
     Write-Host $firstRange.fromEnd
 
@@ -352,7 +352,25 @@ function convertToDate($dateString, $option)
 }
 # Main program
  
-updateFilesTest
+
+
+$pathOption = Read-Host "Testing path (1) or echo path (2)"
+
+switch ($pathOption) {
+    1 {
+        $path = "C:\Users\arfv2b\Desktop\testingThings\"
+    }
+
+    2 {
+        $path = "\\echo\mcp\100\"
+    }
+
+    default {
+         $path = "C:\Users\arfv2b\Desktop\testingThings\"   
+    }
+}
+
+updateFilesTest $path
 
 <##
 $datesDictionary = getRanges 1
