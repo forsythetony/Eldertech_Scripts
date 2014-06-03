@@ -255,4 +255,4 @@ function extractDate($path)
 
 $datesDictionary = getRanges 1
 
-Write-Host $datesDictionary.fromStartDate
+Write-Host $datesDictionary
