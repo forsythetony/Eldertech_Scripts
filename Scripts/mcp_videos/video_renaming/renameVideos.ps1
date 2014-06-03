@@ -310,6 +310,8 @@ function convertToDate($dateString, $option)
     }
 
     $dateObject = [dateTime]::ParseExact($dateString, $dateFormat, $null)
+
+    return $dateObject
 }
 # Main program
  
