@@ -169,16 +169,14 @@ function getRanges($rangeOption)
             Write-Host "The user chose range option 1"
         }
 
-        
+        2 {
+            Write-Host "The user chose range option 2"
+        }
 
-
-
-
+        3 {
+            Write-Host "The user chose range option 3"
+        }
     }
-
-
-
-
 }
 function extractDateFromFolder($folderName)
 {
@@ -215,4 +213,6 @@ function extractDate($path)
  
 # Main program
  
-updateFilesTest
+#updateFilesTest
+
+getRanges 1
