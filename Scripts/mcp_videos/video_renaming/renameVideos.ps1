@@ -277,7 +277,7 @@ function getRanges($rangeOption)
             $fromStartDateString = "06/01/2012"
             $fromEndDateString = "07/25/2012"
 
-            $toStartDateString = "02/04/2014"
+            $toStartDateString = "02/05/2014"
             $toEndDateString = "03/31/2014"
         }
 
