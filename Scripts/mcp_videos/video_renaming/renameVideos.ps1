@@ -165,8 +165,7 @@ function updateFilesTest
         {
            
             Get-ChildItem -Path $_.FullName | Foreach {
-                Write-Host $_.Name
-                Write-Host $_.Extension
+               renameFile $_
             }
         }
         
@@ -226,6 +225,17 @@ function getRanges($rangeOption)
     {
         return $null
     }
+}
+function renameFile($path)
+{
+    $nameTokens = $path.Name.split "-"
+
+    for( $i = 0; $i < $nameTokens.count; $i++)
+    {
+        Write-Host $nameTokens[$i]
+    }
+
+
 }
 function extractDateFromFolder($folderName)
 {
