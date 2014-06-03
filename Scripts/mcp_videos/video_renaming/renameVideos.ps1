@@ -164,7 +164,9 @@ function updateFilesTest
         if (($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd) -or ($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd))
         {
            
-            Write-Host $_.FullName
+            Get-ChildItem -Path $_.FullName | Foreach {
+                Write-Host $_.Name
+            }
         }
         
     }   
