@@ -286,21 +286,24 @@ function renameFile($path, $rangeInfo)
 
         $newDateString = ($nameTokens[0] + "-" + $monthMod + $month + "_" + $daysMod + $days + "_" + $year + "-" + $nameTokens[2])
 
-
+<##
         $fullNameSplit = $_.FullName -split "\"
 
         $fullNameBase = ""
-        <##
+
         for($i = 0; i -lt $fullNameSplit.count - 1 ; $i++)
         {
             $fullNameBase = ($fullNameBase + "\" + $fullNameSplit[$i])
         }
         ##>
 
-        Write-Host $fullNameBase
+        $directory = $_.DirectoryName
 
-        #Write-Host ("The old date string was " + $path.Name)
-        #Write-Host ("The new date string is " + $newDateString)
+        $newDateString = ($directory + "\" + $newDateString)
+
+
+        Write-Host ("The old date string was " + $path.FullName)
+        Write-Host ("The new date string is " + $newDateString)
     }
     
 
