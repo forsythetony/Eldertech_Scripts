@@ -183,9 +183,11 @@ function changeFolderDate($path, $folderDate, $rangeInfo)
 
     $daysDiff = $dateDifference.Days
 
-    $newFolderDate = $folderDate.AddDays($daysDiff)
+    $newDate = $rangeInfo.toStart
 
-    $nfDateString = convertDateToString $newFolderDate 2
+    $newDate = $newDate.AddDays($daysDiff)
+
+    $nfDateString = convertDateToString $newDate 2
 
     #Write-Host ("The date to convert was " + $folderDate)
     #Write-Host $nfDateString
