@@ -228,7 +228,7 @@ function getRanges($rangeOption)
 }
 function renameFile($path)
 {
-    $nameTokens = $path.Name.split "-"
+    $nameTokens = $path.Name -split "-"
 
     for( $i = 0; $i < $nameTokens.count; $i++)
     {
