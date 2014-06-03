@@ -265,9 +265,26 @@ function renameFile($path, $rangeInfo)
         $month = $newDate.month
         $year = $newDate.year
 
-        Write-Host ("Length of days is " + $days.toString.length)
 
-        $newDateString = ($nameTokens[0] + "-" + $month + "_" + $days + "_" + $year + "-" + $nameTokens[2])
+        if(days -ge 10)
+        {
+            $daysMod = ""
+        }
+        else
+        {
+            $daysMod = "0"
+        }
+
+        if($month -ge 10)
+        {
+            $monthMod = ""
+        }
+        else
+        {
+            $monthMod = "0"
+        }
+
+        $newDateString = ($nameTokens[0] + "-" + $monthMod + $month + "_" + $daysMod + $days + "_" + $year + "-" + $nameTokens[2])
 
         Write-Host ("The new date string is " + $newDateString)
     }
