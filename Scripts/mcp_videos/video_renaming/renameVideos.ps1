@@ -163,19 +163,57 @@ function updateFilesTest
 }
 function getRanges($rangeOption)
 {
+    
+    $dateFormatString = "MM/dd/yyyy"
+
     switch ($rangeOption)
     {
         1 {
-            Write-Host "The user chose range option 1"
+            $fromStartDateString = "06/01/2012"
+            $fromEndDateString = "07/25/2012"
+
+            $toStartDateString = "02/01/2014"
+            $toEndDateString = "03/31/2014"
         }
 
         2 {
-            Write-Host "The user chose range option 2"
+            $fromStartDateString = "08/11/2012"
+            $fromEndDateString = "10/07/2012"
+
+            $toStartDateString = "04/04/2014"
+            $toEndDateString = "05/31/2014"
         }
 
-        3 {
-            Write-Host "The user chose range option 3"
+        default {
+            $fromStartDateString = $null
+            $fromEndDateString = $null
+
+            $toStartDateString = $null
+            $toEndDateString = $null
         }
+    }
+
+    if ($fromStartDateString -ne $null)
+    {
+        $fromStartDate = [dateTime]::ParseExact($fromStartDateString, "MM/dd/yyyy" , $null)
+        $fromEndDate = [dateTime]::ParseExact($fromEndDateString, "MM/dd/yyyy" , $null)
+
+        $toStartDate = [dateTime]::ParseExact($toStartDateString, "MM/dd/yyyy" , $null)
+        $toEndDate = [dateTime]::ParseExact($toEndDateString, "MM/dd/yyyy" , $null)
+
+
+        $datesDictionary = @{
+            "fromStart" = $fromStartDate;
+            "fromEnd" = $fromEndDate;
+            "toStart" = $toStartDate;
+            "toEnd" = $toStartDate;
+        }
+
+        return $datesDictionary
+    }
+    else
+    {
+        return $null
     }
 }
 function extractDateFromFolder($folderName)
@@ -215,4 +253,6 @@ function extractDate($path)
  
 #updateFilesTest
 
-getRanges 2
+$datesDictionary = getRanges 1
+
+Write-Host $datesDictionary.fromStartDate
