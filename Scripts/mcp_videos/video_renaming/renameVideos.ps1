@@ -233,12 +233,9 @@ function renameFile($path)
 
     Write-Host ("The file is of type " + $fileType)
 
-
-
-
     $nameTokens = $path.Name -split "-"
 
-    for( $i = 0; $i -lt $nameTokens.count; $i++)
+    for( $i = 1; $i -lt $nameTokens.count; $i++)
     {
         Write-Host $nameTokens[$i]
     }
