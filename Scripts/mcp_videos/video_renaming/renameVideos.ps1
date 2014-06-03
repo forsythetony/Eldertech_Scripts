@@ -267,7 +267,7 @@ function renameFile($path, $rangeInfo)
 
         Write-Host ("Length of days is " + $days.length)
 
-        $newDateString = ($nameTokens[0] + "-" + $month + "_" + $days + "_" + "_" + $year + "-" + $nameTokens[2])
+        $newDateString = ($nameTokens[0] + "-" + $month + "_" + $days + "_" + $year + "-" + $nameTokens[2])
 
         Write-Host ("The new date string is " + $newDateString)
     }
