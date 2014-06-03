@@ -290,11 +290,12 @@ function renameFile($path, $rangeInfo)
         $fullNameSplit = $_.FullName -split "\"
 
         $fullNameBase = ""
-
+        <##
         for($i = 0; i -lt $fullNameSplit.count - 1 ; $i++)
         {
             $fullNameBase = ($fullNameBase + "\" + $fullNameSplit[$i])
         }
+        ##>
 
         Write-Host $fullNameBase
 
