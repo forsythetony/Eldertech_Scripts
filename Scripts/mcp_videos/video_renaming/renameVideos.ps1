@@ -226,19 +226,31 @@ function getRanges($rangeOption)
         return $null
     }
 }
-function renameFile($path)
+function renameFile($path, $rangeInfo)
 {
     
     $fileType = $path.Extension
 
-    Write-Host ("The file is of type " + $fileType)
+    # Write-Host ("The file is of type " + $fileType)
 
     $nameTokens = $path.Name -split "-"
 
+    <##
     for( $i = 1; $i -lt $nameTokens.count; $i++)
     {
         Write-Host $nameTokens[$i]
     }
+    ##>
+
+    if ($nameTokens.count -eq 3)
+    {
+        $fileDate = convertToDate $nameTokens
+
+        $dateDifference = $fileDate - $rangeInfo.fromStart
+
+        Write-Host = ("The duration was " + $dateDifference)
+    }
+    
 
 
 }
@@ -274,7 +286,29 @@ function extractDate($path)
  
   return $dateObject
 }
- 
+function convertToDate($dateString, $option)
+{
+    switch ($option)
+    {
+        1 {
+            $dateFormat = "MM/dd/yyyy"
+        }
+
+        2 {
+            $dateFormat = "M/dd/yyyy"
+        }
+
+        3 {
+            $dateFormat = "MM_dd_yyyy"
+        }
+
+        default {
+            $dateFormat = "MM/dd/yyyy"
+        }
+    }
+
+    $dateObject = [dateTime]::ParseExact($dateString, $dateFormat, $null)
+}
 # Main program
  
 updateFilesTest
