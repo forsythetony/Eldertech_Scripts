@@ -248,16 +248,28 @@ function renameFile($path, $rangeInfo)
 
         $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $fileDate
 
-        Write-Host ("The duration was " + $dateDifference)
+        # Write-Host ("The duration was " + $dateDifference)
 
-        Write-Host ("The date was " + $fileDate)
+        # Write-Host ("The date was " + $fileDate)
 
 
         $newDate = $rangeInfo.toStart
 
         $newDate = $newDate.AddDays($dateDifference.Days)
 
-        Write-Host ("The new date is " + $newDate)
+        # Write-Host ("The new date is " + $newDate)
+
+        $dateTokens = $nameTokens[1] -split "_"
+
+        $days = $newDate.Day
+        $month = $newDate.month
+        $year = $newDate.year
+
+        Write-Host ("Length of days is " + $days.length)
+
+        $newDateString = ($nameTokens[0] + "-" + $month + "_" + $days + "_" + "_" + $year + "-" + $nameTokens[2])
+
+        Write-Host ("The new date string is " + $newDateString)
     }
     
 
