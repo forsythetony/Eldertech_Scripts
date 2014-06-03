@@ -165,7 +165,7 @@ function updateFilesTest
         {
            
             Get-ChildItem -Path $_.FullName | Foreach {
-               renameFile $_
+               renameFile $_ $firstRange
             }
         }
         
