@@ -161,7 +161,7 @@ function updateFilesTest
         # Write-Host $folderDate
 
         
-        if (($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd) -and ($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd))
+        if (($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd) -or ($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd))
         {
             if ($folderDate -ne $null -and $folderDate)
             {
