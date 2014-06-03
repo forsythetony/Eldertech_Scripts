@@ -257,7 +257,7 @@ function renameFile($path, $rangeInfo)
 
         $newDate = $newDate.AddDays($dateDifference.Days)
 
-        Write-Host ("The new date is " $newDate)
+        Write-Host ("The new date is " + $newDate)
     }
     
 
