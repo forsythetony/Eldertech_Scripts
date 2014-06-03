@@ -383,6 +383,12 @@ switch ($pathOption) {
         $path = "\\echo\mcp\100\"
     }
 
+    3 {
+        $folderName = "Enter the folder number"
+
+        $path = ("C:\Users\arfv2b\Desktop\testingThings" + $folderName + "\")
+    }
+
     default {
          $path = "C:\Users\arfv2b\Desktop\testingThings\"   
     }
