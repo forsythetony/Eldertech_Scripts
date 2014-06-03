@@ -251,6 +251,13 @@ function renameFile($path, $rangeInfo)
         Write-Host ("The duration was " + $dateDifference)
 
         Write-Host ("The date was " + $fileDate)
+
+
+        $newDate = $rangeInfo.toStart
+
+        $newDate = $newDate.AddDays($dateDifference.Days)
+
+        Write-Host ("The new date is " $newDate)
     }
     
 
