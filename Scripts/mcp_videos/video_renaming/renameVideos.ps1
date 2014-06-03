@@ -160,7 +160,7 @@ function updateFilesTest
 
         # Write-Host $folderDate
 
-        <##
+        
         if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.toEnd)
         {
             if ($folderDate -ne $null -and $folderDate)
@@ -168,7 +168,7 @@ function updateFilesTest
                 Write-Host $folderDate
             }
         }
-        ##>
+        
     }   
 }
 function getRanges($rangeOption)
