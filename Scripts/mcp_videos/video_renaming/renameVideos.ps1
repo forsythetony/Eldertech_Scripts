@@ -165,7 +165,7 @@ function updateFilesTest($pathToUse)
         {
            
             Get-ChildItem -Path $_.FullName | Foreach {
-               renameFile $_ $firstRange
+               #renameFile $_ $firstRange
             }
 
             changeFolderDate $_ $folderDate $firstRange
@@ -190,7 +190,12 @@ function changeFolderDate($path, $folderDate, $rangeInfo)
     #Write-Host ("The date to convert was " + $folderDate)
     #Write-Host $nfDateString
 
-    Rename-Item $path.FullName -newName $nfDateString
+
+    Write-Host ("The folder date was " + $folderDate)
+    Write-Host ("The folder path was " + $path.FullName)
+    Write-Host ("The new date string was " + $nfDateString)
+
+    # Rename-Item $path.FullName -newName $nfDateString
 }
 function dateAsArray($date)
 {
