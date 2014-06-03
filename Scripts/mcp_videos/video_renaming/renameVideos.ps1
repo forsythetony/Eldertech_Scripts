@@ -255,4 +255,5 @@ function extractDate($path)
 
 $datesDictionary = getRanges 1
 
-Write-Host $datesDictionary
+Write-Host "The range is "  + $datesDictionary.toEnd
+
