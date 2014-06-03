@@ -244,7 +244,7 @@ function renameFile($path, $rangeInfo)
 
     if ($nameTokens.count -eq 3)
     {
-        $fileDate = convertToDate $nameTokens[1]
+        $fileDate = convertToDate $nameTokens[1] 3
 
         $dateDifference = $fileDate - $rangeInfo.fromStart
 
