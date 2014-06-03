@@ -266,7 +266,7 @@ function renameFile($path, $rangeInfo)
         $year = $newDate.year
 
 
-        if(days -ge 10)
+        if($days -ge 10)
         {
             $daysMod = ""
         }
