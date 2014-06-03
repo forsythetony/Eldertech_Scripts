@@ -230,7 +230,7 @@ function renameFile($path)
 {
     $nameTokens = $path.Name -split "-"
 
-    for( $i = 0; $i < $nameTokens.count; $i++)
+    for( $i = 0; $i -lt $nameTokens.count; $i++)
     {
         Write-Host $nameTokens[$i]
     }
