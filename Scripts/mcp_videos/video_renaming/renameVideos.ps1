@@ -163,11 +163,8 @@ function updateFilesTest
         
         if (($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd) -or ($folderDate -ge $secondRange.fromStart -and $folderDate -le $secondRange.fromEnd))
         {
-            if ($folderDate -ne $null -and $folderDate)
-            {
-                #Write-Host ($folderDate + " was between start date " + $firstRange.fromStart + " and " + $firstRange.fromEnd)
-                Write-Host $folderDate
-            }
+           
+            Write-Host $_.FullName
         }
         
     }   
