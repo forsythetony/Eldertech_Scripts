@@ -166,6 +166,7 @@ function updateFilesTest
            
             Get-ChildItem -Path $_.FullName | Foreach {
                 Write-Host $_.Name
+                Write-Host $_.Extension
             }
         }
         
