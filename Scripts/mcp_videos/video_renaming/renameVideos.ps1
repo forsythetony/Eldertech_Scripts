@@ -161,7 +161,7 @@ function updateFilesTest
                 Write-Host $folderDate
             }
         }
-    }
+    }   
 }
 function getRanges($rangeOption)
 {
@@ -253,14 +253,16 @@ function extractDate($path)
  
 # Main program
  
-#updateFilesTest
+updateFilesTest
 
+<##
 $datesDictionary = getRanges 1
 
 Write-Host ("The from start date is " + $datesDictionary.fromStart)
 Write-Host ("The from end date is " + $datesDictionary.fromEnd)
 Write-Host ("The to start date is " + $datesDictionary.toStart)
 Write-Host ("The to end date is " + $datesDictionary.toEnd)
+##>
 
 
 
