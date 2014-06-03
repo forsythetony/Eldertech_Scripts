@@ -123,7 +123,7 @@ function checkDateString($string)
 }
 function updateFilesInRange($range)
 {
-    $pathToFiles = $range.folderPath
+    $pathToFiles = "\\echo\mcp\100\"
    
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
  
@@ -131,33 +131,54 @@ function updateFilesInRange($range)
  
         $folderDate = extractDateFromFolder $_.Name
  
-                if ($folderDate -ne $null)
+        if ($folderDate -ne $null)
         {
-            $dateDiff = ($folderDate - $range.start)
+            Write-Host $folderDate
  
-            if ($dateDiff.Days -eq 0 -or ($folderDate -ge $range.start -and $folderDate -le $range.end))
-            {
-                Get-ChildItem $_.FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object {
-              
-                   $videoCreationDate = extractDate $_.Name
-               
-                   if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
-                   {
-                        $newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
-                                                $ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
-            
-                        $convertMessage = ("Converting video with argument list " + $ArgumentList)
-               
-                        Write-Host $convertMessage
-                       
-                        Start-Process -FilePath "C:\Program Files\ffmpeg\bin\ffmpeg.exe" -ArgumentList $ArgumentList -Wait -NoNewWindow;
-                   }
- 
-               }
-            }
         }
     }
  
+}
+function updateFilesTest
+{
+ $pathToFiles = "\\echo\mcp\100\"
+   
+
+   # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
+    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
+ 
+    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
+ 
+        $folderDate = extractDateFromFolder $_.Name
+ 
+        if ($folderDate -ne $null -and $folderDate)
+        {
+            Write-Host $folderDate
+ 
+        }
+    }
+
+
+
+}
+function getRanges($rangeOption)
+{
+    switch ($rangeOption)
+    {
+        1 {
+            Write-Host "The user chose range option 1"
+        }
+
+        
+
+
+
+
+    }
+
+
+
+
 }
 function extractDateFromFolder($folderName)
 {
@@ -194,10 +215,4 @@ function extractDate($path)
  
 # Main program
  
-$userData = getUserData
- 
-Write-Host ("Start Date: " + $userData.start)
-Write-Host ("End Date: " + $userData.end)
-Write-Host ("Folder path: " + $userData.folderPath)
- 
-updateFilesInRange $userData
+updateFilesTest
