@@ -145,7 +145,7 @@ function updateFilesTest($pathToUse)
 
     $firstRange = getRanges 1
     $secondRange = getRanges 2
-
+    $thirdRange = getRanges 3
 
     # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
@@ -288,7 +288,10 @@ function getRanges($rangeOption)
             $toStartDateString = "04/04/2014"
             $toEndDateString = "05/31/2014"
         }
-
+        3 {
+            $toStartDateString = "02/01/2014"
+            $fromStartDateString = "02/05/2014"
+        }
         default {
             $fromStartDateString = $null
             $fromEndDateString = $null
@@ -462,6 +465,20 @@ function convertToDate($dateString, $option)
     $dateObject = [dateTime]::ParseExact($dateString, $dateFormat, $null)
 
     return $dateObject
+}
+function addFirstRange($path, $rangeInfo, $folderDate)
+{
+    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
+
+    $newDate = $rangeInfo.toStart
+
+    $newDate = $newDate.AddDays($dateDifference.Days)
+
+    $newDateString = convertDateToString $newDate 2
+
+    $folderDirectory = $path.DirectoryName
+
+    Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 # Main program
  
