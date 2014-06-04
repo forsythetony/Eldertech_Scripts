@@ -1,12 +1,15 @@
 ﻿function setData
 {
-    $folderPath = ($env:USERPROFILE + "\Desktop\TestingThings\")
+    $folderPath = ($env:USERPROFILE + "\Desktop\TestingCopies\")
 
-    Write-Host $folderPath
-
-
-
-
+    if (Test-Path $folderPath)
+    {
+    	Write-Host ("The folder " + $folderPath + " does exist.")
+    }
+    else
+    {
+    	Write-Host ("The folder " + $folderPath + " does not exist.")
+    }
 }
 
 
