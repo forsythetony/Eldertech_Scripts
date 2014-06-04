@@ -375,8 +375,12 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     Write-Host $cpToPath
 
     New-Item -ItemType directory -Path $cpToPath
-    
+
     Copy-Item $cpFromPath $cpToPath -recurse
+
+    Get-ChildItem -Path $cpToPath | Foreach {
+               renameFile $_ $rangeInfo
+            }
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
