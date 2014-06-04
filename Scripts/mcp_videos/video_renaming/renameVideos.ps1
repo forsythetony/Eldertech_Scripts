@@ -188,7 +188,7 @@ function updateFilesTest($pathToUse)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
             Write-Host $thirdRange.fromStart $thirdRange.fromEnd
-            
+
             addFirstRange $_ $thirdRange $folderDate
         }
     }
@@ -343,8 +343,10 @@ function renameFile($path, $rangeInfo)
 
 function addFirstRange($path, $rangeInfo, $folderDate)
 {
-    Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo.fromSart + " and $folderDate = " + $folderDate)
+    # Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo.fromSart + " and $folderDate = " + $folderDate)
 
+    Write-Host $rangeInfo.fromStart
+    
     # $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
 
     $newDate = $rangeInfo.toStart
