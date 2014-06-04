@@ -483,31 +483,6 @@ function convertDateToString($date, $option)
     return $dateString
 
 }
-#
-# Main program
-#
-
-$pathOption = Read-Host "Testing path (1) or echo path (2)"
-
-switch ($pathOption) {
-    1 {
-        $path = "C:\Users\arfv2b\Desktop\testingThings\"
-    }
-
-    2 {
-        $path = "\\echo\mcp\100\"
-    }
-
-    3 {
-        $folderName =  Read-Host "Enter the folder number"
-
-        $path = ("C:\Users\arfv2b\Desktop\testingThings" + $folderName + "\")
-    }
-
-    default {
-         $path = "C:\Users\arfv2b\Desktop\testingThings\"   
-    }
-}
 function extractDate($path)
 {
  
@@ -547,6 +522,17 @@ function convertToDate($dateString, $option)
 
     return $dateObject
 }
+#
+# Main program
+#
+
+$path = "C:\Users\arfv2b\Desktop\testingThings24\"
+
+$confirmMessage = ("Folders in path -> " + $path + " will be modified. Is this correct? Any key to continue, 'Ctrl-C' to quit")
+
+$userOption = Read-Host $confirmMessage
+
+
 updateFilesTest $path
 
 
