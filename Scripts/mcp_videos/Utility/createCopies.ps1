@@ -18,7 +18,7 @@
     	"folderDirectory" = $en1;
     	"folderName" = $newFolderName;
     	"foldersCount" = $foldersToCreate;
-    	"originalName" = $originalFolderPath; 
+    	"originalPath" = $originalFolderPath; 
     	"error" = $error;
     }
 
@@ -29,10 +29,7 @@
 
 function copyFolder($data)
 {
-	
-	$orgPath = ($data.folderDirectory + $data.originalName)
-
-	Write-Host $orgPath
+	Write-Host $data.originalPath
 
 	for( $i = 1; $i -le $data.foldersCount; $i++)
 	{
