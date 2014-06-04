@@ -357,9 +357,9 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $folderDirectory = $path.DirectoryName
 
-    $cpFromPath = ($path.FullName + "\*")
+    $cpFromPath = $path.FullName + "\*"
 
-    $cpToPath = ($folderDirectory + "\" + $newDateString)
+    $cpToPath = $folderDirectory + "\" + $newDateString
     
     Write-Host $cpFromPath $cpToPath
 
