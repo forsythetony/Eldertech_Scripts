@@ -3,7 +3,7 @@
     $folderPath = ($env:USERPROFILE + "\Desktop\TestingCopies\")
     $foldersToCreate = 10
     $newFolderName = "testing"
-    $originalName = "original"
+    $originalName = "original\*"
     $originalFolderPath = ($folderPath + $originalName)
 
     $error = $null
@@ -37,7 +37,14 @@ function copyFolder($data)
 
 		$newFolderPath = ($data.folderDirectory + $folderName)
 
-		Write-Host $newFolderPath
+		if(Test-Path $newFolderPath)
+		{
+			Remove-Item -Recurse -Force $newFolderPath
+		}
+		
+		New-Item -ItemType directory -Path $newFolderPath
+
+		Copy-Item $data.originalPath $newFolderPath
 	}
 }
 
