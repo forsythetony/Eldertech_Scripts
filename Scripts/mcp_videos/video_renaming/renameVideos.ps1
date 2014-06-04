@@ -188,8 +188,8 @@ function updateFilesTest($pathToUse)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
             #write-host $thirdRange.fromStart $thirdRange.fromEnd
-
-            addFirstRange $_ $thirdRange $folderDate
+            #Write-Host $_.FullName
+            addFirstRange $_ $thirdRange $folderDate $pathToFiles
         }
     }
 }
@@ -340,7 +340,7 @@ function renameFile($path, $rangeInfo)
 
 }
 
-function addFirstRange($path, $rangeInfo, $folderDate)
+function addFirstRange($path, $rangeInfo, $folderDate, $pathToFiles)
 {
     # Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo.fromSart + " and $folderDate = " + $folderDate)
 
@@ -370,8 +370,16 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $cpToPath = $folderDirectory + $newDateString
     
-    #write-host $cpFromPath
-    #write-host $cpToPath
+    write-host $cpFromPath
+
+    $replaceString = ($path.Name + "\*$")
+
+    Write-Host ("Replace string is " + $replaceString)
+    Write-Host ("New date string is " + $newDateString)
+
+    $cpToPath = ($pathToFiles + "\KinectData\" + $newDateString)
+     
+    write-host $cpToPath
 
     New-Item -ItemType directory -Path $cpToPath
 
@@ -380,6 +388,7 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     Get-ChildItem -Path $cpToPath | Foreach {
                renameFile $_ $rangeInfo
             }
+
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
@@ -526,12 +535,13 @@ function convertToDate($dateString, $option)
 # Main program
 #
 
-$path = "C:\Users\arfv2b\Desktop\testingThings24\"
+$path = Read-Host "Enter the path to the folder containing subfolder 'kinectData'"
 
-$confirmMessage = ("Folders in path -> " + $path + " will be modified. Is this correct? Any key to continue, 'Ctrl-C' to quit")
+$confirmMessage = ("Folders in path -> " + $path + " will be modified. Is this correct?")
 
-$userOption = Read-Host $confirmMessage
+Write-Host $confirmMessage
 
+$userOption = Read-Host "Enter any key to continue or Ctrl-C to exit"
 
 updateFilesTest $path
 
