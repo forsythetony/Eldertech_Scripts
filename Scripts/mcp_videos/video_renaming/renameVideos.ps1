@@ -361,7 +361,7 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     {
         $folderDirectory = ""
 
-        for ($i = 0; $i < ($folderDirectoryTokens.count - 1); $i++)
+        for ($i = 0; $i -lt ($folderDirectoryTokens.count - 1); $i++)
         {
             $folderDirectory = ($folderDirectoryTokens[$i] + "\")
         }
