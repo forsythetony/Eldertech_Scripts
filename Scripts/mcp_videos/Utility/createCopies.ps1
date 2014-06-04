@@ -44,7 +44,7 @@ function copyFolder($data)
 		
 		New-Item -ItemType directory -Path $newFolderPath
 
-		Copy-Item $data.originalPath $newFolderPath
+		Copy-Item $data.originalPath $newFolderPath -Recurse
 	}
 }
 
