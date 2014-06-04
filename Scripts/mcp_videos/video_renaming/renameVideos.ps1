@@ -184,7 +184,7 @@ function updateFilesTest($pathToUse)
 
         $folderDate = extractDateFromFolder $_.Name
 
-        Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
+        #Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
             #write-host $thirdRange.fromStart $thirdRange.fromEnd
