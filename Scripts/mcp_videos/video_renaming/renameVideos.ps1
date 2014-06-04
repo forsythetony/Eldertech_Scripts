@@ -187,6 +187,8 @@ function updateFilesTest($pathToUse)
         Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
+            Write-Host $thirdRange.fromStart $thirdRange.fromEnd
+            
             addFirstRange $_ $thirdRange $folderDate
         }
     }
@@ -353,7 +355,7 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $folderDirectory = $path.DirectoryName
 
-    Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
+    # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
 #
