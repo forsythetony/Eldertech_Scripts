@@ -346,8 +346,8 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     # Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo.fromSart + " and $folderDate = " + $folderDate)
 
     Write-Host $rangeInfo.fromStart
-    
-    # $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
+
+    $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromSart -End $folderDate
 
     $newDate = $rangeInfo.toStart
 
@@ -357,6 +357,10 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $folderDirectory = $path.DirectoryName
 
+    $cpFromPath = $path + "\*"
+
+    $cpToPath = $folderDirectory + "\" + $newDateString
+    Copy-Item $cpFromPath $cpToPath
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
