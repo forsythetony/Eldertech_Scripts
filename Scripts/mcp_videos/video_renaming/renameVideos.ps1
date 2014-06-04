@@ -361,7 +361,8 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $cpToPath = $folderDirectory + "\" + $newDateString
     
-    Write-Host $cpFromPath $cpToPath
+    Write-Host $cpFromPath
+    Write-Host $cpToPath
 
     #Copy-Item $cpFromPath $cpToPath -recurse
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
