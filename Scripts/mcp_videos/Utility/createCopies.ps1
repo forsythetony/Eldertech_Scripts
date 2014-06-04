@@ -1,6 +1,6 @@
 ﻿function setData
 {
-    $folderPath = ($env:USERPROFILE + "\Desktop\TestingThings\"
+    $folderPath = ($env:USERPROFILE + "\Desktop\TestingThings\")
 
     Write-Host $folderPath
 
