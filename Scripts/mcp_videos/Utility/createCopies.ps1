@@ -27,6 +27,17 @@
     return $finalDict
 }
 
+function copyFolder($data)
+{
+	for( $i = 1; $i -le $data.foldersCount; $i++)
+	{
+		$folderName = ($data.folderName + $i)
+
+		$newFolderPath = ($data.folderDirectory + $folderName)
+
+		Write-Host $newFolderPath
+	}
+}
 
 function copyFolderInPath($path) 
 {
@@ -42,4 +53,6 @@ function copyFolderInPath($path)
 #	Main Program
 #
 
-setData
+$userData = setData
+
+
