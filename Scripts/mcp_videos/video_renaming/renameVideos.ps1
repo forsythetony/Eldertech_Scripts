@@ -357,9 +357,9 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $folderDirectory = $path.DirectoryName
 
-    $cpFromPath = $path + "\*"
+    $cpFromPath = ($path.FullName + "\*")
 
-    $cpToPath = $folderDirectory + "\" + $newDateString
+    $cpToPath = ($folderDirectory + "\" + $newDateString)
     Copy-Item $cpFromPath $cpToPath
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
