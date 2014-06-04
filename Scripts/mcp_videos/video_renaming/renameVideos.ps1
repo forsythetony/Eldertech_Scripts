@@ -355,7 +355,17 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $newDateString = convertDateToString $newDate 2
 
-    $folderDirectory = $path.DirectoryName
+    $folderDirectoryTokens = $path.FullName -split "\"
+
+    if($folderDirectoryTokens.count -eq 7)
+    {
+        $folderDirectory = ""
+
+        for ($i = 0; i < ($folderDirectoryTokens.count - 1); i++)
+        {
+            $folderDirectory = ($folderDirectoryTokens[$i] + "\")
+        }
+    }
 
     $cpFromPath = $path.FullName + "\*"
 
@@ -363,7 +373,6 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     
     Write-Host $cpFromPath
     Write-Host $cpToPath
-    Write-Host "hi there"
 
     #Copy-Item $cpFromPath $cpToPath -recurse
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
