@@ -360,7 +360,10 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     $cpFromPath = ($path.FullName + "\*")
 
     $cpToPath = ($folderDirectory + "\" + $newDateString)
-    Copy-Item $cpFromPath $cpToPath -recurse
+    
+    Write-Host $cpFromPath $cpToPath
+
+    #Copy-Item $cpFromPath $cpToPath -recurse
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
@@ -401,7 +404,7 @@ function changeFolderDate($path, $folderDate, $rangeInfo)
 
     $nfDateString = convertDateToString $newDate 2
 
-    Rename-Item $path.FullName -newName $nfDateString
+    # Rename-Item $path.FullName -newName $nfDateString
 }
 
 function dateAsArray($date)
