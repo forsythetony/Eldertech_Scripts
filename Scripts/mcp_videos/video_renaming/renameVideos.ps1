@@ -355,7 +355,7 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $newDateString = convertDateToString $newDate 2
 
-    $folderDirectoryTokens = $path.FullName -split "\"
+    $folderDirectoryTokens = $path.FullName -split "\\"
 
     if($folderDirectoryTokens.count -eq 7)
     {
