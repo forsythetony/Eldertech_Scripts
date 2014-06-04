@@ -406,7 +406,7 @@ function changeFolderDate($path, $folderDate, $rangeInfo)
 
     $nfDateString = convertDateToString $newDate 2
 
-    # Rename-Item $path.FullName -newName $nfDateString
+    Rename-Item $path.FullName -newName $nfDateString
 }
 
 function dateAsArray($date)
