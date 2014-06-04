@@ -29,6 +29,11 @@
 
 function copyFolder($data)
 {
+	
+	$orgPath = ($data.folderDirectory + $data.originalName)
+
+	Write-Host $orgPath
+
 	for( $i = 1; $i -le $data.foldersCount; $i++)
 	{
 		$folderName = ($data.folderName + $i)
