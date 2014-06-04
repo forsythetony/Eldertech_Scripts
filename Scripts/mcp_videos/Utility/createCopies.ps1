@@ -55,4 +55,6 @@ function copyFolderInPath($path)
 
 $userData = setData
 
+copyFolder $userData
+
 
