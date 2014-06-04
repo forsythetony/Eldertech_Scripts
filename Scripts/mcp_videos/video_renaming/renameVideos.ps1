@@ -133,7 +133,7 @@ function updateFilesInRange($range)
  
         if ($folderDate -ne $null)
         {
-            Write-Host $folderDate
+            #write-host $folderDate
  
         }
     }
@@ -150,8 +150,8 @@ function updateFilesTest($pathToUse)
     # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
 
-    Write-Host $firstRange.fromStart
-    Write-Host $firstRange.fromEnd
+    #write-host $firstRange.fromStart
+    #write-host $firstRange.fromEnd
 
         
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
@@ -187,7 +187,7 @@ function updateFilesTest($pathToUse)
         Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
-            Write-Host $thirdRange.fromStart $thirdRange.fromEnd
+            #write-host $thirdRange.fromStart $thirdRange.fromEnd
 
             addFirstRange $_ $thirdRange $folderDate
         }
@@ -257,7 +257,6 @@ function getRanges($rangeOption)
 }
 function renameFile($path, $rangeInfo)
 {
-    
     $fileType = $path.Extension
 
     # Write-Host ("The file is of type " + $fileType)
@@ -371,8 +370,8 @@ function addFirstRange($path, $rangeInfo, $folderDate)
 
     $cpToPath = $folderDirectory + $newDateString
     
-    Write-Host $cpFromPath
-    Write-Host $cpToPath
+    #write-host $cpFromPath
+    #write-host $cpToPath
 
     New-Item -ItemType directory -Path $cpToPath
 
