@@ -1,15 +1,30 @@
 ﻿function setData
 {
     $folderPath = ($env:USERPROFILE + "\Desktop\TestingCopies\")
+    $foldersToCreate = 10
+    $newFolderName = "testing"
+    $originalName = "original"
+    $originalFolderPath = ($folderPath + $originalName)
 
-    if (Test-Path $folderPath)
-    {
-    	Write-Host ("The folder " + $folderPath + " does exist.")
+    $error = $null
+
+    if(Test-Path $folderPath) {$en1 = $folderPath} else {$en1 = $null}
+    if(Test-Path $originalFolderPath) {$en2 = $originalFolderPath} else {
+    	$en2 = $null
+    	$error = "The folder could not be found"
     }
-    else
-    {
-    	Write-Host ("The folder " + $folderPath + " does not exist.")
+
+    $finalDict = @{
+    	"folderDirectory" = $en1;
+    	"folderName" = $newFolderName;
+    	"foldersCount" = $foldersToCreate;
+    	"originalName" = $originalFolderPath; 
+    	"error" = $error;
     }
+
+    Write-Host ("The folder directory is " + $finalDict.folderDirectory + " The folder name is " + $finalDict.folderName + " The folders count is " + $finalDict.foldersCount + " The original name is " + $finalDict.originalName + " The error is " + $finalDict.error)
+
+    return $finalDict
 }
 
 
