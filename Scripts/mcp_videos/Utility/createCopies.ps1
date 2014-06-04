@@ -1,6 +1,8 @@
 ﻿function setData
 {
-    $folderPath = ""
+    $folderPath = ($env:USERPROFILE + "\Desktop\TestingThings\"
+
+    Write-Host $folderPath
 
 
 
@@ -17,3 +19,9 @@ function copyFolderInPath($path)
     Remove-Item -Recurse -Force $_.FullName
    }
 }
+
+#
+#	Main Program
+#
+
+setData
