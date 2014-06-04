@@ -22,7 +22,7 @@
     	"error" = $error;
     }
 
-    Write-Host ("The folder directory is " + $finalDict.folderDirectory + " The folder name is " + $finalDict.folderName + " The folders count is " + $finalDict.foldersCount + " The original name is " + $finalDict.originalName + " The error is " + $finalDict.error)
+    # Write-Host ("The folder directory is " + $finalDict.folderDirectory + " The folder name is " + $finalDict.folderName + " The folders count is " + $finalDict.foldersCount + " The original name is " + $finalDict.originalName + " The error is " + $finalDict.error)
 
     return $finalDict
 }
