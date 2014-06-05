@@ -1,5 +1,5 @@
 ﻿# Function definitions
- 
+<##
 function getUserData
 {
     Do {
@@ -36,9 +36,9 @@ function getUserData
  
  
     $startDate = Read-Host "Enter the start date for the date range in the format M/d/YYYY h:m AM/PM"
-    # $startDate = "5/20/2013"
+
     $endDate = Read-Host "Enter the end date for the date range in the format M/d/YYYY h:m AM/PM"
-    # $endDate = "5/20/2013"
+
     $startParseString = checkDateString $startDate
     $endParseString = checkDateString $endDate
    
@@ -54,6 +54,7 @@ function getUserData
  
     return $userData
 }
+##>
 function checkUserIDString($string)
 {
     $length = $string.length
@@ -121,20 +122,6 @@ function checkDateString($string)
     return $parseString
  
 }
-<##
-function updateFilesInRange($range)
-{
-    $pathToFiles = "\\echo\mcp\100\"
-   
-    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
- 
-    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
- 
-        $folderDate = extractDateFromFolder $_.Name
-    }
- 
-}
-##>
 function updateFilesTest($pathToUse)
 {
     $pathToFiles = $pathToUse
