@@ -2,29 +2,7 @@
 # Function definitions
 #
 
-function checkDateString($string)
-{
-    $tokens = $string.Split(" ")
- 
-    $count = $tokens.length
-   
-    if ($count -eq 1)
-    {
-        $parseString = "M/d/yyyy"
-    }
-    elseif ($count -eq 2)
-    {
-        $parseString = "M/d/yyyy H:m"
-    }
-    elseif ($count -eq 3)
-    {
-        $parseString = "M/d/yyyy h:m tt"
-    }
- 
-    return $parseString
- 
-}
-function updateFilesTest($pathToUse)
+function updateFileNames($pathToUse)
 {
     $pathToFiles = $pathToUse
 
@@ -235,7 +213,28 @@ function addFirstRange($path, $rangeInfo, $folderDate, $pathToFiles)
 #
 # Utility Functions
 #
-
+function checkDateString($string)
+{
+    $tokens = $string.Split(" ")
+ 
+    $count = $tokens.length
+   
+    if ($count -eq 1)
+    {
+        $parseString = "M/d/yyyy"
+    }
+    elseif ($count -eq 2)
+    {
+        $parseString = "M/d/yyyy H:m"
+    }
+    elseif ($count -eq 3)
+    {
+        $parseString = "M/d/yyyy h:m tt"
+    }
+ 
+    return $parseString
+ 
+}
 function extractDateFromFolder($folderName)
 {
  
@@ -371,6 +370,7 @@ function convertToDate($dateString, $option)
 
     return $dateObject
 }
+
 #
 # Main program
 #
@@ -383,6 +383,6 @@ Write-Host $confirmMessage
 
 $userOption = Read-Host "Enter any key to continue or Ctrl-C to exit"
 
-updateFilesTest $path
+updateFileNames $path
 
 
