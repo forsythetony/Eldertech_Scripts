@@ -1,60 +1,7 @@
-﻿# Function definitions
-<##
-function getUserData
-{
-    Do {
-        $rootPath = Read-Host "Enter the path to the folder containing video files (NOT /userid)"
-        # $rootPath = "C:\Users\muengrcerthospkinect\Desktop\testing"
- 
-        $pathTest = Test-Path $rootPath
- 
-        if (!$pathTest) { Write-Host "Path provided was not valid, try again." }
-        } while ($pathTest -eq $false)
- 
-       
- 
-    Do {
-        $userID = Read-Host "Enter the userID (Enter all to search all files)"
- 
-        $isValidID = checkUserIDString $userID
-       
-        
-        Write-Host $isValidID.message
- 
-        $userID = $isvalidID.path
- 
-        } while ($isValidID.isValid -eq $false)
- 
-    $rootPathLength = $rootPath.length - 1
- 
-    if($rootPath[$rootPathLength] -ne "\")
-    {
-        $rootPath = "$rootPath\"
-    }
- 
-    $folderPath = ($rootPath + $userID);
- 
- 
-    $startDate = Read-Host "Enter the start date for the date range in the format M/d/YYYY h:m AM/PM"
+﻿#
+# Function definitions
+#
 
-    $endDate = Read-Host "Enter the end date for the date range in the format M/d/YYYY h:m AM/PM"
-
-    $startParseString = checkDateString $startDate
-    $endParseString = checkDateString $endDate
-   
-    $startDate = [dateTime]::ParseExact($startDate, $startParseString, $null)
-    $endDate = [dateTime]::ParseExact($endDate, $endParseString , $null)
- 
- 
-    $userData = @{
-                    "start" = $startDate;
-                    "end" = $endDate;
-                    "folderPath" = $folderPath;
-                 }
- 
-    return $userData
-}
-##>
 function checkUserIDString($string)
 {
     $length = $string.length
