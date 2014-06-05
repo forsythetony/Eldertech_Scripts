@@ -121,6 +121,7 @@ function checkDateString($string)
     return $parseString
  
 }
+<##
 function updateFilesInRange($range)
 {
     $pathToFiles = "\\echo\mcp\100\"
@@ -130,15 +131,10 @@ function updateFilesInRange($range)
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
  
         $folderDate = extractDateFromFolder $_.Name
- 
-        if ($folderDate -ne $null)
-        {
-            #write-host $folderDate
- 
-        }
     }
  
 }
+##>
 function updateFilesTest($pathToUse)
 {
     $pathToFiles = $pathToUse
@@ -147,20 +143,12 @@ function updateFilesTest($pathToUse)
     $secondRange = getRanges 2
     $thirdRange = getRanges 3
 
-    # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
-
-    #write-host $firstRange.fromStart
-    #write-host $firstRange.fromEnd
-
-        
+   
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
  
         $folderDate = extractDateFromFolder $_.Name
-
-        # Write-Host $folderDate
-
-        
+  
         if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd)
         {
            
@@ -184,11 +172,8 @@ function updateFilesTest($pathToUse)
 
         $folderDate = extractDateFromFolder $_.Name
 
-        #Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
-            #write-host $thirdRange.fromStart $thirdRange.fromEnd
-            #Write-Host $_.FullName
             addFirstRange $_ $thirdRange $folderDate $pathToFiles
         }
     }
@@ -259,16 +244,7 @@ function renameFile($path, $rangeInfo)
 {
     $fileType = $path.Extension
 
-    # Write-Host ("The file is of type " + $fileType)
-
     $nameTokens = $path.Name -split "-"
-
-    <##
-    for( $i = 1; $i -lt $nameTokens.count; $i++)
-    {
-        Write-Host $nameTokens[$i]
-    }
-    ##>
 
     if ($nameTokens.count -eq 3)
     {
@@ -276,16 +252,9 @@ function renameFile($path, $rangeInfo)
 
         $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $fileDate
 
-        # Write-Host ("The duration was " + $dateDifference)
-
-        # Write-Host ("The date was " + $fileDate)
-
-
         $newDate = $rangeInfo.toStart
 
         $newDate = $newDate.AddDays($dateDifference.Days)
-
-        # Write-Host ("The new date is " + $newDate)
 
         $dateTokens = $nameTokens[1] -split "_"
 
@@ -314,30 +283,12 @@ function renameFile($path, $rangeInfo)
 
         $newDateString = ($nameTokens[0] + "-" + $monthMod + $month + "_" + $daysMod + $days + "_" + $year + "-" + $nameTokens[2])
 
-<##
-        $fullNameSplit = $_.FullName -split "\"
-
-        $fullNameBase = ""
-
-        for($i = 0; i -lt $fullNameSplit.count - 1 ; $i++)
-        {
-            $fullNameBase = ($fullNameBase + "\" + $fullNameSplit[$i])
-        }
-        ##>
-
         $directory = $_.DirectoryName
 
         $newDateString = ($directory + "\" + $newDateString)
 
-
-        #Write-Host ("The old date string was " + $path.FullName)
-        #Write-Host ("The new date string is " + $newDateString)
-
         Rename-Item $path.FullName $newDateString
     }
-    
-
-
 }
 
 function addFirstRange($path, $rangeInfo, $folderDate, $pathToFiles)
