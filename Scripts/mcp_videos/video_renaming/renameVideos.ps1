@@ -2,51 +2,6 @@
 # Function definitions
 #
 
-function checkUserIDString($string)
-{
-    $length = $string.length
- 
-    if ($string -eq "all" -or $string -eq "All")
-    {
-        $package = @{ "isValid" = $true;
-                    "path" = "";
-                    "message" = "User has chosen to search all user IDs";
-                   }
-        return $package
-    }
- 
- 
-    if ($length -ne 3)
-    {
-        
-       $package = @{ "isValid" = $false;
-                    "path" = $null;
-                    "message" = "The user ID entered is not of the right length. Please try again.";
-                   }
- 
-        return $package
- 
-    }
-   
-    if (!($string -match "^[0-9]*$"))
-    {
-    
-        $package = @{ "isValid" = $false;
-                    "path" = $null;
-                    "message" = "The user ID entered is not a numeric value. Please try again.";
-                   }
- 
-        return $package
-    
-    }
- 
-    $package = @{ "isValid" = $true;
-                    "path" = $string;
-                    "message" = "The userID entered was in the correct format.";
-                   }
- 
-    return $package
-}
 function checkDateString($string)
 {
     $tokens = $string.Split(" ")
