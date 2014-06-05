@@ -188,16 +188,16 @@ function addFirstRange($path, $rangeInfo, $folderDate, $pathToFiles)
 
     $cpToPath = $folderDirectory + $newDateString
     
-    write-host $cpFromPath
+    #write-host $cpFromPath
 
     $replaceString = ($path.Name + "\*$")
 
-    Write-Host ("Replace string is " + $replaceString)
-    Write-Host ("New date string is " + $newDateString)
+    #Write-Host ("Replace string is " + $replaceString)
+    #Write-Host ("New date string is " + $newDateString)
 
     $cpToPath = ($pathToFiles + "\KinectData\" + $newDateString)
      
-    write-host $cpToPath
+    #write-host $cpToPath
 
     New-Item -ItemType directory -Path $cpToPath
 
