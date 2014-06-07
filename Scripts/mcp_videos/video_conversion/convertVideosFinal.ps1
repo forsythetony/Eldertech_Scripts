@@ -1,5 +1,16 @@
-﻿# Function definitions
- 
+﻿#
+#   Function Name: getUserData
+#
+#   Inputs: None
+#
+#   Output:
+#       -$userData: A dictionary containing the entries...
+#           - "start"     ->    A dateTime object that marks the start of the date range
+#           - "end"       ->    A dateTime object that marks the end of the date range
+#           - "folderPath"->    A path (string) object containing the folderpath to the folder containing the subfolder "KinectData"
+#
+#   Purpose: To gather input from the user to know which videos this script should convert
+#
 function getUserData
 {
     Do {
