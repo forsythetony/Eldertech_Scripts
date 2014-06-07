@@ -65,6 +65,21 @@ function getUserData
  
     return $userData
 }
+#
+#   Function Name:  checkUserIDString
+#   
+#   Inputs:
+#       - $string: A string containing the user ID that is to be validated
+#
+#   Output:
+#       - $package: A dictionary with the following entries...
+#           - "isValid"     -> A boolean value indicating whether the ID entered was a valid ID
+#           - "path"        -> A string that contains the original string if it is a valid ID or $null if it is not.
+#           - "message"     -> A message describing the output. Error message or success message.
+#
+#   Purpose:    The purpose of this function is to check whether the user inputed ID value is a number of the right lenght or if it is the 
+#               string 'All' which would indicate the function would be looking through all ID's
+#
 function checkUserIDString($string)
 {
     $length = $string.length
