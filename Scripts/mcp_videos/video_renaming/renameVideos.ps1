@@ -1,145 +1,8 @@
-﻿# Function definitions
- 
-function getUserData
-{
-    Do {
-        $rootPath = Read-Host "Enter the path to the folder containing video files (NOT /userid)"
-        # $rootPath = "C:\Users\muengrcerthospkinect\Desktop\testing"
- 
-        $pathTest = Test-Path $rootPath
- 
-        if (!$pathTest) { Write-Host "Path provided was not valid, try again." }
-        } while ($pathTest -eq $false)
- 
-       
- 
-    Do {
-        $userID = Read-Host "Enter the userID (Enter all to search all files)"
- 
-        $isValidID = checkUserIDString $userID
-       
-        
-        Write-Host $isValidID.message
- 
-        $userID = $isvalidID.path
- 
-        } while ($isValidID.isValid -eq $false)
- 
-    $rootPathLength = $rootPath.length - 1
- 
-    if($rootPath[$rootPathLength] -ne "\")
-    {
-        $rootPath = "$rootPath\"
-    }
- 
-    $folderPath = ($rootPath + $userID);
- 
- 
-    $startDate = Read-Host "Enter the start date for the date range in the format M/d/YYYY h:m AM/PM"
-    # $startDate = "5/20/2013"
-    $endDate = Read-Host "Enter the end date for the date range in the format M/d/YYYY h:m AM/PM"
-    # $endDate = "5/20/2013"
-    $startParseString = checkDateString $startDate
-    $endParseString = checkDateString $endDate
-   
-    $startDate = [dateTime]::ParseExact($startDate, $startParseString, $null)
-    $endDate = [dateTime]::ParseExact($endDate, $endParseString , $null)
- 
- 
-    $userData = @{
-                    "start" = $startDate;
-                    "end" = $endDate;
-                    "folderPath" = $folderPath;
-                 }
- 
-    return $userData
-}
-function checkUserIDString($string)
-{
-    $length = $string.length
- 
-    if ($string -eq "all" -or $string -eq "All")
-    {
-        $package = @{ "isValid" = $true;
-                    "path" = "";
-                    "message" = "User has chosen to search all user IDs";
-                   }
-        return $package
-    }
- 
- 
-    if ($length -ne 3)
-    {
-        
-       $package = @{ "isValid" = $false;
-                    "path" = $null;
-                    "message" = "The user ID entered is not of the right length. Please try again.";
-                   }
- 
-        return $package
- 
-    }
-   
-    if (!($string -match "^[0-9]*$"))
-    {
-    
-        $package = @{ "isValid" = $false;
-                    "path" = $null;
-                    "message" = "The user ID entered is not a numeric value. Please try again.";
-                   }
- 
-        return $package
-    
-    }
- 
-    $package = @{ "isValid" = $true;
-                    "path" = $string;
-                    "message" = "The userID entered was in the correct format.";
-                   }
- 
-    return $package
-}
-function checkDateString($string)
-{
-    $tokens = $string.Split(" ")
- 
-    $count = $tokens.length
-   
-    if ($count -eq 1)
-    {
-        $parseString = "M/d/yyyy"
-    }
-    elseif ($count -eq 2)
-    {
-        $parseString = "M/d/yyyy H:m"
-    }
-    elseif ($count -eq 3)
-    {
-        $parseString = "M/d/yyyy h:m tt"
-    }
- 
-    return $parseString
- 
-}
-function updateFilesInRange($range)
-{
-    $pathToFiles = "\\echo\mcp\100\"
-   
-    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
- 
-    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
- 
-        $folderDate = extractDateFromFolder $_.Name
- 
-        if ($folderDate -ne $null)
-        {
-            #write-host $folderDate
- 
-        }
-    }
- 
-}
-function updateFilesTest($pathToUse)
+﻿#
+# Function definitions
+#
+
+function updateFileNames($pathToUse)
 {
     $pathToFiles = $pathToUse
 
@@ -147,20 +10,12 @@ function updateFilesTest($pathToUse)
     $secondRange = getRanges 2
     $thirdRange = getRanges 3
 
-    # $dateRangeOne = @{ "startDate" : [dateTime]::ParseExact("6/1/2012", "M/d, $null)
     $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
-
-    #write-host $firstRange.fromStart
-    #write-host $firstRange.fromEnd
-
-        
+   
     Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
  
         $folderDate = extractDateFromFolder $_.Name
-
-        # Write-Host $folderDate
-
-        
+  
         if ($folderDate -ge $firstRange.fromStart -and $folderDate -le $firstRange.fromEnd)
         {
            
@@ -184,12 +39,9 @@ function updateFilesTest($pathToUse)
 
         $folderDate = extractDateFromFolder $_.Name
 
-        #Write-Host ("Folder date = " + $folderDate + " Third range start = " + $thirdRange.fromStart + " Third range end = " + $thirdRange.fromEnd)
         if($folderDate -ge $thirdRange.fromStart -and $folderDate -le $thirdRange.fromEnd)
         {
-            #write-host $thirdRange.fromStart $thirdRange.fromEnd
-
-            addFirstRange $_ $thirdRange $folderDate
+            addFirstRange $_ $thirdRange $folderDate $pathToFiles
         }
     }
 }
@@ -259,16 +111,7 @@ function renameFile($path, $rangeInfo)
 {
     $fileType = $path.Extension
 
-    # Write-Host ("The file is of type " + $fileType)
-
     $nameTokens = $path.Name -split "-"
-
-    <##
-    for( $i = 1; $i -lt $nameTokens.count; $i++)
-    {
-        Write-Host $nameTokens[$i]
-    }
-    ##>
 
     if ($nameTokens.count -eq 3)
     {
@@ -276,16 +119,9 @@ function renameFile($path, $rangeInfo)
 
         $dateDifference = NEW-TIMESPAN -Start $rangeInfo.fromStart -End $fileDate
 
-        # Write-Host ("The duration was " + $dateDifference)
-
-        # Write-Host ("The date was " + $fileDate)
-
-
         $newDate = $rangeInfo.toStart
 
         $newDate = $newDate.AddDays($dateDifference.Days)
-
-        # Write-Host ("The new date is " + $newDate)
 
         $dateTokens = $nameTokens[1] -split "_"
 
@@ -314,33 +150,15 @@ function renameFile($path, $rangeInfo)
 
         $newDateString = ($nameTokens[0] + "-" + $monthMod + $month + "_" + $daysMod + $days + "_" + $year + "-" + $nameTokens[2])
 
-<##
-        $fullNameSplit = $_.FullName -split "\"
-
-        $fullNameBase = ""
-
-        for($i = 0; i -lt $fullNameSplit.count - 1 ; $i++)
-        {
-            $fullNameBase = ($fullNameBase + "\" + $fullNameSplit[$i])
-        }
-        ##>
-
         $directory = $_.DirectoryName
 
         $newDateString = ($directory + "\" + $newDateString)
 
-
-        #Write-Host ("The old date string was " + $path.FullName)
-        #Write-Host ("The new date string is " + $newDateString)
-
         Rename-Item $path.FullName $newDateString
     }
-    
-
-
 }
 
-function addFirstRange($path, $rangeInfo, $folderDate)
+function addFirstRange($path, $rangeInfo, $folderDate, $pathToFiles)
 {
     # Write-Host ("addFirstRange is running with $path = " + $path + " and $rangeInfo = " + $rangeInfo.fromSart + " and $folderDate = " + $folderDate)
 
@@ -371,6 +189,14 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     $cpToPath = $folderDirectory + $newDateString
     
     #write-host $cpFromPath
+
+    $replaceString = ($path.Name + "\*$")
+
+    #Write-Host ("Replace string is " + $replaceString)
+    #Write-Host ("New date string is " + $newDateString)
+
+    $cpToPath = ($pathToFiles + "\KinectData\" + $newDateString)
+     
     #write-host $cpToPath
 
     New-Item -ItemType directory -Path $cpToPath
@@ -380,13 +206,35 @@ function addFirstRange($path, $rangeInfo, $folderDate)
     Get-ChildItem -Path $cpToPath | Foreach {
                renameFile $_ $rangeInfo
             }
+
     # Copy-Item ($path + "\*") ($folderDirectory + "\" + $newDateString)
 }
 
 #
 # Utility Functions
 #
-
+function checkDateString($string)
+{
+    $tokens = $string.Split(" ")
+ 
+    $count = $tokens.length
+   
+    if ($count -eq 1)
+    {
+        $parseString = "M/d/yyyy"
+    }
+    elseif ($count -eq 2)
+    {
+        $parseString = "M/d/yyyy H:m"
+    }
+    elseif ($count -eq 3)
+    {
+        $parseString = "M/d/yyyy h:m tt"
+    }
+ 
+    return $parseString
+ 
+}
 function extractDateFromFolder($folderName)
 {
  
@@ -522,17 +370,19 @@ function convertToDate($dateString, $option)
 
     return $dateObject
 }
+
 #
 # Main program
 #
 
-$path = "C:\Users\arfv2b\Desktop\testingThings24\"
+$path = Read-Host "Enter the path to the folder containing subfolder 'kinectData'"
 
-$confirmMessage = ("Folders in path -> " + $path + " will be modified. Is this correct? Any key to continue, 'Ctrl-C' to quit")
+$confirmMessage = ("Folders in path -> " + $path + " will be modified. Is this correct?")
 
-$userOption = Read-Host $confirmMessage
+Write-Host $confirmMessage
 
+$userOption = Read-Host "Enter any key to continue or Ctrl-C to exit"
 
-updateFilesTest $path
+updateFileNames $path
 
 
