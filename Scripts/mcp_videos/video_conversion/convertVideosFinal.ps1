@@ -7,7 +7,7 @@
 #       -$userData: A dictionary containing the entries...
 #           - "start"     ->    A dateTime object that marks the start of the date range
 #           - "end"       ->    A dateTime object that marks the end of the date range
-#           - "folderPath"->    A path (string) object containing the folderpath to the folder containing the subfolder "KinectData"
+#           - "folderPath"->    A path (string) object containing the folderPath to the folder containing the subfolder "KinectData"
 #
 #   Purpose: To gather input from the user to know which videos this script should convert
 #
@@ -125,6 +125,18 @@ function checkUserIDString($string)
  
     return $package
 }
+#
+#	Function Name: checkDateString
+#
+#	Inputs: 
+#		-$string: A string containing the date that whose format will be checked. 
+#
+#	Output:
+#		-$parseString: A string that shows the format of the date string that was passed into the function. 
+#
+#	Purpose:	To determine the format of the date string so that the ParseExact function knows what kind of
+#				date to expect.
+#
 function checkDateString($string)
 {
     $tokens = $string.Split(" ")
@@ -147,6 +159,18 @@ function checkDateString($string)
     return $parseString
  
 }
+#
+#	Function Name: updateFilesInRange
+#
+#	Inputs:
+#		-$range: A dictionary containing the following entries...
+#           - "start"     ->    A dateTime object that marks the start of the date range
+#           - "end"       ->    A dateTime object that marks the end of the date range
+#           - "folderPath"->    A path (string) object containing the folderPath to the folder containing the subfolder "KinectData"
+#	Output: None
+#
+#	Purpose: To convert videos within the specified date range and folder from .avi's to .mp4's 
+#
 function updateFilesInRange($range)
 {
     $pathToFiles = $range.folderPath
@@ -185,6 +209,18 @@ function updateFilesInRange($range)
     }
  
 }
+#
+#	Function Name: extractDateFromFolder
+#
+#	Inputs:
+#		-$folderName: A string containing the name of the folder
+#
+#	Output:
+#		-$dateObject: A date object built from the date specified in the string $folderName which was passed into the function.
+#
+#	Purpose:	To convert the folder name, which is a basic string object, into a date object which can be used for comparisons with
+#				other date objects. 
+#
 function extractDateFromFolder($folderName)
 {
  
@@ -203,6 +239,10 @@ function extractDateFromFolder($folderName)
  
                 return $dateObject
 }
+#
+#	Function Name: extractDate
+#
+#	
 function extractDate($path)
 {
  
