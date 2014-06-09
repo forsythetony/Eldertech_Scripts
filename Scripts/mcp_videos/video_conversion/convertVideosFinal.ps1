@@ -218,8 +218,9 @@ function updateFilesInRange($range)
 #	Output:
 #		-$dateObject: A date object built from the date specified in the string $folderName which was passed into the function.
 #
-#	Purpose:	To convert the folder name, which is a basic string object, into a date object which can be used for comparisons with
-#				other date objects. 
+#	Purpose:	
+#       To convert the folder name, which is a basic string object, into a date object which can be used for comparisons with
+#		other date objects. 
 #
 function extractDateFromFolder($folderName)
 {
@@ -242,7 +243,15 @@ function extractDateFromFolder($folderName)
 #
 #	Function Name: extractDate
 #
-#	
+#   Inputs:
+#       -$path: A string containing the name of the file from which a date can be extracted
+#
+#   Output:
+#       -$dateObject: A dateTime object built from the string that was passed into the function
+#
+#   Purpose:
+#       To convert the name of a file into a date which can be used for comparisons.
+#
 function extractDate($path)
 {
  
