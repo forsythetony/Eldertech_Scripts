@@ -168,21 +168,10 @@ function getRanges($rangeOption)
         1 {
             Write-Host "The user chose range option 1"
         }
-
-        
-
-
-
-
     }
-
-
-
-
 }
 function extractDateFromFolder($folderName)
 {
- 
     $dateTokens = $folderName -split "_"
  
                 if ($dateTokens.Count -ne 3)
