@@ -14,7 +14,7 @@
 function getUserData
 {
     Do {
-        $rootPath = Read-Host "Enter the path to the folder containing video files (NOT /userid)"
+        $rootPath = Read-Host "Enter the path to the folder containing the dated folders containing the video files"
         # $rootPath = "C:\Users\muengrcerthospkinect\Desktop\testing"
  
         $pathTest = Test-Path $rootPath
@@ -23,7 +23,7 @@ function getUserData
         } while ($pathTest -eq $false)
  
        
- 
+ <##
     Do {
         $userID = Read-Host "Enter the userID (Enter all to search all files)"
  
@@ -35,7 +35,8 @@ function getUserData
         $userID = $isvalidID.path
  
         } while ($isValidID.isValid -eq $false)
- 
+ ##>
+
     $rootPathLength = $rootPath.length - 1
  
     if($rootPath[$rootPathLength] -ne "\")
@@ -43,8 +44,7 @@ function getUserData
         $rootPath = "$rootPath\"
     }
  
-    $folderPath = ($rootPath + $userID);
- 
+    $folderPath = $rootPath
  
     $startDate = Read-Host "Enter the start date for the date range in the format M/d/YYYY h:m AM/PM"
     # $startDate = "5/20/2013"
@@ -175,38 +175,9 @@ function updateFilesInRange($range)
 {
     $pathToFiles = $range.folderPath
    
-    $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
+    # $theChild = Get-ChildItem -Path $pathToFiles | Where {$_.PSIsContainer -eq $true -and $_.Name -eq "KinectData"}
  
-    Get-ChildItem -Path $theChild.FullName | Where {$_.PSIsContainer -eq $true} | Foreach {
- 
-        $folderDate = extractDateFromFolder $_.Name
- 
-                if ($folderDate -ne $null)
-        {
-            $dateDiff = ($folderDate - $range.start)
- 
-            if ($dateDiff.Days -eq 0 -or ($folderDate -ge $range.start -and $folderDate -le $range.end))
-            {
-                Get-ChildItem $_.FullName -Recurse | Where-Object {$_.Name -like "*.avi" -and !$_.PSIsDirectory} | Foreach-Object {
-              
-                   $videoCreationDate = extractDate $_.Name
-               
-                   if($videoCreationDate -ne $null -and $videoCreationDate -ge $range.start -and $videoCreationDate -le $range.end)
-                   {
-                        $newVideo = [io.path]::ChangeExtension($_.FullName, '.mp4')
-                                                $ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $_.FullName, $newVideo;
-            
-                        $convertMessage = ("Converting video with argument list " + $ArgumentList)
-               
-                        Write-Host $convertMessage
-                       
-                        Start-Process -FilePath "C:\Program Files\ffmpeg\bin\ffmpeg.exe" -ArgumentList $ArgumentList -Wait -NoNewWindow;
-                   }
- 
-               }
-            }
-        }
-    }
+    sortedFileConversion $pathToFiles $range
  
 }
 #
@@ -240,6 +211,22 @@ function extractDateFromFolder($folderName)
  
                 return $dateObject
 }
+function extractDateFromFolder2($folderName)
+{
+ 
+    $dateTokens = $folderName -split "_"
+ 
+                if ($dateTokens.Count -ne 3)
+                {
+                                return $null
+                }
+               
+                $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
+               
+                $dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
+               
+                return $dateObject
+}
 #
 #	Function Name: extractDate
 #
@@ -266,9 +253,61 @@ function extractDate($path)
  
   return $dateObject
 }
- 
+function sortedFileConversion($path, $range)
+{
+	$foldersArray = @()
+
+
+    Get-ChildItem -Path $path | Where-Object {$_.PSIsContainer -eq $true} | ForEach-Object {
+        $fullPath = $_.FullName
+
+        $name = $_.Name
+
+        $date = extractDateFromFolder2 $name
+
+        $props = @{
+                   Path = $fullPath
+                   Name = $name
+                   Date = $date
+                   }
+
+        $theObject = New-Object PSObject -Property $props
+        
+        Write-Host ("The range start is " + $range.start)
+        Write-Host ("The range end is " + $range.end)
+        Write-Host ("The folder's date is " + $date)
+        Write-Host ("The path is " + $path)
+
+        if($date -ge $range.start -and $date -le $range.end)
+        {
+            $foldersArray += $theObject
+        }
+    }
+
+    $foldersArray | Sort-Object {$_.Date} -Descending | ForEach-Object {
+       
+       Get-ChildItem -Path $_.Path -Recurse | Where-Object {$_.PSIsContainer -eq $false -and $_.Extension -eq ".avi"} | ForEach-Object {
+       
+        startConvertProcessOnVideo $_
+        }
+    }
+
+}
+function startConvertProcessOnVideo($path)
+{
+	$newVideo = [io.path]::ChangeExtension($path.FullName, '.mp4')
+	
+	$ArgumentList = '-i "{0}" -an -b:v 64k -bufsize 64k -vcodec libx264 -pix_fmt yuv420p "{1}"' -f $path.FullName, $newVideo;
+
+	$convertMessage = ("Converting video with argument list " + $ArgumentList)
+
+	Write-Host $convertMessage
+
+	Start-Process -FilePath "C:\Users\arfv2b\Downloads\ffmpeg\ffmpeg-20140609-git-958168d-win64-static\bin\ffmpeg.exe" -ArgumentList $ArgumentList -Wait -NoNewWindow;
+}
 # Main program
  
+
 $userData = getUserData
  
 Write-Host ("Start Date: " + $userData.start)
@@ -276,3 +315,11 @@ Write-Host ("End Date: " + $userData.end)
 Write-Host ("Folder path: " + $userData.folderPath)
  
 updateFilesInRange $userData
+
+<##
+$testPath = "C:\Users\arfv2b\Desktop\testingCopies\testing3\KinectData"
+
+$testPath2 = "\\echo\mcp\100\KinectData"
+
+getFoldersArray $testPath
+##>
