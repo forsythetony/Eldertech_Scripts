@@ -15,28 +15,12 @@ function getUserData
 {
     Do {
         $rootPath = Read-Host "Enter the path to the folder containing the dated folders containing the video files"
-        # $rootPath = "C:\Users\muengrcerthospkinect\Desktop\testing"
- 
+		
         $pathTest = Test-Path $rootPath
  
         if (!$pathTest) { Write-Host "Path provided was not valid, try again." }
         } while ($pathTest -eq $false)
- 
-       
- <##
-    Do {
-        $userID = Read-Host "Enter the userID (Enter all to search all files)"
- 
-        $isValidID = checkUserIDString $userID
-       
-        
-        Write-Host $isValidID.message
- 
-        $userID = $isvalidID.path
- 
-        } while ($isValidID.isValid -eq $false)
- ##>
-
+		
     $rootPathLength = $rootPath.length - 1
  
     if($rootPath[$rootPathLength] -ne "\")
@@ -315,11 +299,3 @@ Write-Host ("End Date: " + $userData.end)
 Write-Host ("Folder path: " + $userData.folderPath)
  
 updateFilesInRange $userData
-
-<##
-$testPath = "C:\Users\arfv2b\Desktop\testingCopies\testing3\KinectData"
-
-$testPath2 = "\\echo\mcp\100\KinectData"
-
-getFoldersArray $testPath
-##>
