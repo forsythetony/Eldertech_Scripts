@@ -50,6 +50,14 @@
         return $null
     }
 }
+function logDeletion($fileName, $deletionCount)
+{
+    $deleteMessage = ("The file " + $fileName + " is being deleted.")
+
+    Write-Host $deleteMessage
+    
+    $deletionCount += 1
+}
 function checkUserOption($userOption)
 {
     $yesNames = "yes", "y", "YES"
@@ -120,15 +128,18 @@ function deleteFiles($userInput)
     Write-Host $userInput.path
     Write-Host $userInput.type
 
+    $deletionCount = 0
+
     Get-ChildItem -Path $userInput.path -Recurse | Where {$_.Extension -eq $userInput.type} | ForEach-Object {
         
-        $deleteMessage = ("The file " + $_.Name + " is being deleted")
-
-
-        Write-Host $deleteMessage
+        logDeletion $_.Name $deletionCount
 
         Remove-Item -Path $_.FullName
     }
+
+    $finalMessage = ($deletionCount + " files of type " + $userInput.type " have been deleted from the directory " + $userInput.path)
+
+    Write-Host $finalMessage
 }
 function testingFunction($var1)
 {
