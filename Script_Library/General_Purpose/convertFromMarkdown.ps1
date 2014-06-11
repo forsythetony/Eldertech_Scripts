@@ -1,13 +1,13 @@
 ﻿function getUserInput
 {
-    $pathToFiles = Read-Host "Enter the path to the folder containing the markdown files to be converted:"
+    $pathToFiles = Read-Host "Enter the path to the folder containing the markdown files to be converted"
 
     while((Test-Path $pathToFiles) -eq $false)
     {
         $pathToFiles = Read-Host "Invalid path provided. Let's try that again."
     }
 
-    $recurseBool = Read-Host "Do you want to find files recursively? yes/no"
+    $recurseBool = Read-Host "Do you want to find files recursively? 'yes' or 'no'"
 
     $recurseCheck = checkYesNoOption $recurseBool
 
