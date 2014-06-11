@@ -1,7 +1,7 @@
 ### Status 
-|Date Tested   |Status       |
-|:-------------|-------------|
-|Unknown       |**Not Working**|
+|Date Tested   |Status       |Description|
+|:-------------|-------------|:---------:|
+|Unknown       |**Unknown**|Needs testing|
 
 ### Purpose
 
