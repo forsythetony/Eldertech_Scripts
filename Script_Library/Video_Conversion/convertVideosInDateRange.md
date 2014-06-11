@@ -22,5 +22,7 @@ To convert videos from .avi format to .mp4 format within a directory.
 
 If I didn't write this script forever ago relative to your current time, feel free to contact me with questions.
 * Name: Anthony Forsythe
-* School Email: arfv2b@mail.missouri.edu
-* Other Email: forsythetony@gmail.com
+   * School Email: arfv2b@mail.missouri.edu
+   * Other Email: forsythetony@gmail.com
+
+For questions about the ffmpeg stuff you may want to contact Ben or whoever worked with him on that part as I just copied, with his permission, that line of code from his **bat** file.
