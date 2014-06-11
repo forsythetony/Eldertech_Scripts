@@ -34,7 +34,7 @@ function checkFileType($fileType)
     $mp4Names = "mp4", "MP4", ".MP4", ".mp4"
 
 
-    for ($nameString in $aviNames)
+    foreach ($nameString in $aviNames)
     {
         if($nameString -eq $fileType)
         {
@@ -42,7 +42,7 @@ function checkFileType($fileType)
         }
     }
 
-    for ($nameString in $mp4Names)
+    foreach ($nameString in $mp4Names)
     {
         if($nameString -eq $fileType)
         {
