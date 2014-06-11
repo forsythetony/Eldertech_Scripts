@@ -26,3 +26,10 @@ This script will do the following:
    4. Enter the date in the specified format
    5. Enter the time in the specified format
 3. The script should now run and complete in a matter of seconds.
+
+### Contact Info
+
+If I didn't write this script forever ago relative to your current time, feel free to contact me with questions.
+* Name: Anthony Forsythe
+* School Email: arfv2b@mail.missouri.edu
+* Other Email: forsythetony@gmail.com
