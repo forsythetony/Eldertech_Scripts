@@ -11,3 +11,4 @@ This script will recursively delete all files of a specified type within the pro
       * Currently the following files types are supported: .avi, .mp4, .txt
 3. The script will now ask you to confirm the deletions.
 4. If confirmed, the script will delete files of the type specified in the path provided.
+5. With each deletion a short message will be written to the console. At the end of all deletions a final message giving more general information will be shown.
