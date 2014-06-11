@@ -35,19 +35,27 @@
 
     $optionCheck = checkUserOption $userOption
 
-    while($optionCheck -eq $null)
+    while()
     {
-        $userOption = "Invalid input. Please enter 'yes' or 'no'"
-        $optionCheck = checkUserOption $userOption
+        if($optionCheck -ne $null)
+        {
+            break
+        }
+
+        $errorInput = "Invalid input. Please enter 'yes' or 'no'"
+
+        Read-Host $errorMessage
+
+        $optionCheck = checkUserOption $errorInput
     }
 
-    if($userOption -eq "yes")
+    if($optionCheck -eq "yes")
     {
         return $userInput
     }
     else
     {
-        return $null
+        Exit
     }
 }
 function logDeletion($fileName, $deletionCount)
@@ -169,14 +177,8 @@ function testingFunction($var1)
 
 $userInput = getUserInput
 
-if($userInput -eq $null)
-{
-    return
-}
-else
-{
-    deleteFiles $userInput    
-}
+deleteFiles $userInput    
+
 
 # testingFunction "HiS"
 
