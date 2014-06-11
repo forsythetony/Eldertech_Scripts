@@ -33,9 +33,12 @@
 
     $userOption = Read-Host "Are you sure you want to do this? Enter 'yes' or 'no'"
 
-    while((checkUserOption $userOption) -eq $null)
+    $optionCheck = checkUserOption $userOption
+
+    while($optionCheck -eq $null)
     {
         $userOption = "Invalid input. Please enter 'yes' or 'no'"
+        $optionCheck = checkUserOption $userOption
     }
 
     if($userOption -eq "yes")
