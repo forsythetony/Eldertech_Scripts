@@ -20,19 +20,62 @@
         $fType = checkFileType $fType
     }
 
+
     $userInput = @{ "path" = $pathToFolder;
                     "type" = $fType;
                     }
 
+    # Confirm the selection
 
-    return $userInput
+    $confirmMessage = ("The script will delete all files of type " + $userInput.type + " in the directory " + $userInput.path + "")
+
+    Write-Host $confirmMessage
+
+    $userOption = Read-Host "Are you sure you want to do this? Enter 'yes' or 'no'"
+
+    while((checkUserOption $userOption) -eq $null)
+    {
+        $userOption = "Invalid input. Please enter 'yes' or 'no'"
+    }
+
+    if($userOption -eq "yes")
+    {
+        return $userInput
+    }
+    else
+    {
+        return $null
+    }
 }
+function checkUserOption($userOption)
+{
+    $yesNames = "yes", "y", "YES"
+    $noNames = "no", "n", "NO"
 
+    foreach ($nameString in $yesNames)
+    {
+        if($nameString -eq $userOption)
+        {
+            return "yes"
+        }
+    }
+
+    foreach ($nameString in $noNames)
+    {
+        if($nameString -eq $userOption)
+        {
+            return "no"
+        }
+    }
+
+    return $null
+}
 function checkFileType($fileType)
 {
     $aviNames = "avi", "AVI", ".avi", ".AVI"
     $mp4Names = "mp4", "MP4", ".MP4", ".mp4"
-
+    $textNames = "text", "txt", "TXT", ".txt", ".TXT"
+    $allNames = "all", "ALL"
 
     foreach ($nameString in $aviNames)
     {
@@ -50,6 +93,22 @@ function checkFileType($fileType)
         }
     }
 
+    foreach ($nameString in $textNames)
+    {
+        if ($nameString -eq $fileType)
+        {
+            return ".txt"
+        }
+    }
+
+    foreach ($nameString in $allNames)
+    {
+        if ($nameString -eq $fileType)
+        {
+            return "all"
+        }
+    }
+
     return $null
 }
 
@@ -57,7 +116,6 @@ function deleteFiles($userInput)
 {
     Write-Host $userInput.path
     Write-Host $userInput.type
- # | Where {$_.PSIsDirectory -eq $false -and $_.Extension -eq $userInput.type} |
 
     Get-ChildItem -Path $userInput.path -Recurse | Where {$_.Extension -eq $userInput.type} | ForEach-Object {
         
@@ -92,11 +150,17 @@ function testingFunction($var1)
 # Main Program
 #
 
-<##
+
 $userInput = getUserInput
 
-deleteFiles $userInput
-##>
+if($userInput -eq $null)
+{
+    return
+}
+else
+{
+    deleteFiles $userInput    
+}
 
-testingFunction "HiS"
+# testingFunction "HiS"
 
