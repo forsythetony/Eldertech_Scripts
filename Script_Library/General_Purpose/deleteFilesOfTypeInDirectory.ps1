@@ -31,24 +31,24 @@
 
     Write-Host $confirmMessage
 
-    $userOption = Read-Host "Are you sure you want to do this? Enter 'yes' or 'no'"
+    $userOption = Read-Host "Are you sure you want to do this? Enter 'yes' to continue or 'no' quit"
 
     $optionCheck = checkUserOption $userOption
 
-    while()
+    while(1)
     {
         if($optionCheck -ne $null)
         {
             break
         }
 
-        $errorInput = "Invalid input. Please enter 'yes' or 'no'"
+        $errorInput = Read-Host "Invalid input. Please enter 'yes' or 'no'"
 
-        Read-Host $errorMessage
 
         $optionCheck = checkUserOption $errorInput
     }
 
+    
     if($optionCheck -eq "yes")
     {
         return $userInput
