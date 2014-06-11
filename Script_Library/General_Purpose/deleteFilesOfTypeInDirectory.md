@@ -1,7 +1,8 @@
 ### Status
-|Date Tested|Status|
-|:----------|------|
-|*6/10/2014*|**Working**|
+|Date Tested|Status|Description       |
+|:----------|-----------|:----------------:|
+|6/10/2014|**Bugs**|Gets stuck in while loop when asking for input|
+|6/11/2014|**Working**| Fixes bug|
 
 ### Purpose
 
