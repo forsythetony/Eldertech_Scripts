@@ -23,7 +23,7 @@ There is no license on this repository so by default I retain the rights, or may
 
 ### Disclaimer
 
-This is a repository that I currently run on my own. It wasn't asked of me by anyone in the team so any problem you have with its content is a problem with me, Anthony Forsythe, and not Eldertech. My contact info is below so feel free to contact me with any issues or concerns.
+This is a repository that I currently run on my own. It wasn't asked of me by anyone in the team so any problem you have with its content is a problem with me, Anthony Forsythe, and not Eldertech. My contact info is below so feel free to message me with any issues or concerns.
 
 ### Contact Info
 
