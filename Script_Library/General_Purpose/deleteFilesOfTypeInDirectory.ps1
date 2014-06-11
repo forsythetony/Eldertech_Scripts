@@ -49,7 +49,7 @@ function checkFileType($fileType)
             return ".mp4"
         }
     }
-    
+
     return $null
 }
 
@@ -69,13 +69,34 @@ function deleteFiles($userInput)
         Remove-Item -Path $_.FullName
     }
 }
+function testingFunction($var1)
+{
+    $fileType = Read-Host "Enter the file type to check"
 
+    $fileType = checkFileType $fileType
+
+    if($fileType -ne $null)
+    {
+        $successMessage = ("The fileType -> " + $fileType + " was found!")
+
+        Write-Host $successMessage
+    }
+    else
+    {
+        $errorMessage = ("The fileType -> " + $fileType + " could not be found...")
+
+        Write-Host $errorMessage
+    }
+}
 #
 # Main Program
 #
 
+<##
 $userInput = getUserInput
 
 deleteFiles $userInput
+##>
 
+testingFunction "HiS"
 
