@@ -17,3 +17,10 @@ To convert videos from .avi format to .mp4 format within a directory.
 3. Enter the start date of the date range you wish to convert videos in.
 4. Enter the end date of the date range you wish to convert videos in.
 5. After entering the end date the script will run. It will begin processing videos at the end of the date range first, i.e. the most recent videos will be processed first. 
+
+### Contact Info
+
+If I didn't write this script forever ago relative to your current time, feel free to contact me with questions.
+* Name: Anthony Forsythe
+* School Email: arfv2b@mail.missouri.edu
+* Other Email: forsythetony@gmail.com
