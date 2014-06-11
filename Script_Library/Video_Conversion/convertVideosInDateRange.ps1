@@ -301,11 +301,13 @@ function sortedFileConversion($path, $range)
 
         $theObject = New-Object PSObject -Property $props
         
+		<##
         Write-Host ("The range start is " + $range.start)
         Write-Host ("The range end is " + $range.end)
         Write-Host ("The folder's date is " + $date)
         Write-Host ("The path is " + $path)
-
+		##>
+		
         if($date -ge $range.start -and $date -le $range.end)
         {
             $foldersArray += $theObject
