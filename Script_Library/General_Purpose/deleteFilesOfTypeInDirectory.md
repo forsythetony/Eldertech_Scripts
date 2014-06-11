@@ -1,3 +1,8 @@
+### Status
+|Date Tested|Status|
+|:----------|------|
+|*6/10/2014*|**Working**|
+
 ### Purpose
 
 This script will recursively delete all files of a specified type within the provided directory. It will log deletions to the console.
