@@ -30,16 +30,26 @@
 
 function checkFileType($fileType)
 {
-    if (($fileType -eq "avi") -or ($fileType -eq "AVI") -or ($fileType -eq ".avi") -or ($fileType -eq ".AVI"))
+    $aviNames = "avi", "AVI", ".avi", ".AVI"
+    $mp4Names = "mp4", "MP4", ".MP4", ".mp4"
+
+
+    for ($nameString in $aviNames)
     {
-        return ".avi"
+        if($nameString -eq $fileType)
+        {
+            return ".avi"
+        }
     }
 
-    if (($fileType -eq "mp4") -or ($fileType -eq "MP4") -or ($fileType -eq ".MP4") -or ($fileType -eq ".mp4"))
+    for ($nameString in $mp4Names)
     {
-        return ".mp4"
+        if($nameString -eq $fileType)
+        {
+            return ".mp4"
+        }
     }
-
+    
     return $null
 }
 
