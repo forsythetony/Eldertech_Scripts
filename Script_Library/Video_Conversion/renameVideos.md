@@ -1,3 +1,9 @@
+### Status
+|Date Tested|Status|
+|:----------|------|
+|Unknown    |**Unknown**|
+
+
 ### Purpose
 
 To rename videos within a folder, specifically changing the date in the name of the video, so that videos of in a certain range will be moved to a different date range. Also, the first few folders will be copied to create and their dates changed to the beginning of the new date range, effectively 'adding' videos to the beginning of the new date range.
@@ -17,3 +23,10 @@ To rename videos within a folder, specifically changing the date in the name of 
 ### Disclaimer
 
 I really don't think anyone else is going to use this script but if they do I apologize for making it so confusing. I'd rewrite it but why bother?
+
+### Contact Info
+
+If I didn't write this script forever ago relative to your current time, feel free to contact me with questions.
+* Name: Anthony Forsythe
+* School Email: arfv2b@mail.missouri.edu
+* Other Email: forsythetony@gmail.com
