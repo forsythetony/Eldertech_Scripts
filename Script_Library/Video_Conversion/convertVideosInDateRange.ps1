@@ -288,10 +288,30 @@ function sortedFileConversion($path, $range)
        
        Get-ChildItem -Path $_.Path -Recurse | Where-Object {$_.PSIsContainer -eq $false -and $_.Extension -eq ".avi"} | ForEach-Object {
        
-        startConvertProcessOnVideo $_
+	   $existsBool = testIfVideoExists $_
+	   
+	    if($existsBool -eq $true)
+	    {
+			$existsMessage = ("The file at path " + $_.FullName + " already exists, will not convert this file.")
+			
+			Write-Host $existsMessage
+		}
+		else
+		{
+		
+			startConvertProcessOnVideo $_
+	    }
         }
     }
 
+}
+function testIfVideoExists($path)
+{
+	$newName = [io.path]::ChangeExtension($path.FullName, '.mp4')
+	
+	$existsBool = Test-Path $newName
+	
+	return $existsBool
 }
 function startConvertProcessOnVideo($path)
 {
