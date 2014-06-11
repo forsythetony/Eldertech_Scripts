@@ -137,7 +137,7 @@ function deleteFiles($userInput)
         Remove-Item -Path $_.FullName
     }
 
-    $finalMessage = ($deletionCount + " files of type " + $userInput.type " have been deleted from the directory " + $userInput.path)
+    $finalMessage = ($deletionCount.ToString() + " files of type " + $userInput.type + " have been deleted from the directory " + $userInput.path)
 
     Write-Host $finalMessage
 }
