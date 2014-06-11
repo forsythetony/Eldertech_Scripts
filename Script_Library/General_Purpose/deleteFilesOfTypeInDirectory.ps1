@@ -56,7 +56,7 @@ function logDeletion($fileName, $deletionCount)
 
     Write-Host $deleteMessage
     
-    $deletionCount += 1
+    $deletionCount.Value += 1
 }
 function checkUserOption($userOption)
 {
@@ -130,9 +130,11 @@ function deleteFiles($userInput)
 
     $deletionCount = 0
 
+    $deleteRef = [Ref]$deletionCount
+
     Get-ChildItem -Path $userInput.path -Recurse | Where {$_.Extension -eq $userInput.type} | ForEach-Object {
         
-        logDeletion $_.Name $deletionCount
+        logDeletion $_.Name $deleteRef
 
         Remove-Item -Path $_.FullName
     }
