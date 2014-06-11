@@ -1,7 +1,7 @@
 ### Status
-|Date Tested|Status|
-|:----------|------|
-|6/11/2014|**Working**|
+|Date Tested|Status|Description|
+|:----------|------|:---------:|
+|6/11/2014|**Working**|Converts videos just fine|
 
 ### Purpose
 To convert videos from .avi format to .mp4 format within a directory.
