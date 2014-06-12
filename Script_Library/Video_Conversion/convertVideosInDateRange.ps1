@@ -225,48 +225,76 @@ function extractDateFromFolder($folderName)
 {
  
     $dateTokens = $folderName -split "_"
- 
-                if ($dateTokens.Count -ne 3)
-                {
-                                return $null
-                }
-               
-                $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
-               
-                $dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
-               
-                # Write-Host $dateObject
- 
-                return $dateObject
+
+    if ($dateTokens.Count -ne 3) {
+
+        return $null
+
+    }
+    
+    $thirdToken = $dateTokens[2];
+
+    if ($thirdToken.length -eq 4) {
+
+        $formatString = "MM/dd/yyyy"
+
+    } 
+    elseif ($thirdToken.length -eq 2) {
+
+        $formatString = "MM/dd/yy"
+
+    }
+    else {
+
+        return $null
+
+    }
+
+    $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
+       
+    $dateObject = [dateTime]::ParseExact($dateString, $formatString , $null)
+       
+    # Write-Host $dateObject
+
+    return $dateObject
+
 }
 function extractDateFromFolder2($folderName)
 {
  
-    $dateTokens = $folderName -split "_"
- 
-		if ($dateTokens.Count -ne 3) {
-					
-					return $null
-					
-                }
-				else {
-				
-					$thirdToken = $dateTokens[2]
-					
-					if($thirdToken.length -ne 4)
-					{
-					
-						$dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
-               
-						$dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
-               
-						return $dateObject
-					}
-					else {
-						return $null
-					}
-				}
-				
+$dateTokens = $folderName -split "_"
+
+    if ($dateTokens.Count -ne 3) {
+
+        return $null
+
+    }
+    
+    $thirdToken = $dateTokens[2];
+
+    if ($thirdToken.length -eq 4) {
+
+        $formatString = "MM/dd/yyyy"
+
+    } 
+    elseif ($thirdToken.length -eq 2) {
+
+        $formatString = "MM/dd/yy"
+
+    }
+    else {
+
+        return $null
+
+    }
+
+    $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
+       
+    $dateObject = [dateTime]::ParseExact($dateString, $formatString , $null)
+       
+    # Write-Host $dateObject
+
+    return $dateObject
 }
 #
 #	Function Name: extractDate
