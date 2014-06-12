@@ -56,14 +56,42 @@ function getUserData
     $startDate = [dateTime]::ParseExact($startDate, $startParseString, $null)
     $endDate = [dateTime]::ParseExact($endDate, $endParseString , $null)
  
- 
+	$converterLocation = Read-Host "To use the correct location for ffmpeg please choose your machine...Echo [0] , Test-Machine[1] , Other[2]"
+	
+	$converterLocation = checkConverterLocation $converterLocation
+	
     $userData = @{
                     "start" = $startDate;
                     "end" = $endDate;
                     "folderPath" = $folderPath;
+					"ffmpegPath" = $converterLocation;
                  }
  
     return $userData
+}
+function checkConverterLocation($locationOption)
+{
+	Switch ($locationOption)
+	{
+		0 {
+			$location = "C:\Program Files\ffmpeg\bin\ffmpeg.exe"
+		}
+		
+		1 {
+			$location = "C:\Users\arfv2b\Downloads\ffmpeg\ffmpeg-20140609-git-958168d-win64-static\bin\ffmpeg.exe"
+		}
+		
+		default {
+			$location = Read-Host "Enter the location to use"
+			
+			while((Test-Path $location) -eq $null)
+			{
+				$location = Read-Host "Invalid path entered. Please try that again."
+			}
+		}
+	}
+	
+	return $location
 }
 #
 #   Function Name:  checkUserIDString
@@ -216,16 +244,29 @@ function extractDateFromFolder2($folderName)
  
     $dateTokens = $folderName -split "_"
  
-                if ($dateTokens.Count -ne 3)
-                {
-                                return $null
+		if ($dateTokens.Count -ne 3) {
+					
+					return $null
+					
                 }
+				else {
+				
+					$thirdToken = $dateTokens[2]
+					
+					if($thirdToken.length -ne 4)
+					{
+					
+						$dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
                
-                $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
+						$dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
                
-                $dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
-               
-                return $dateObject
+						return $dateObject
+					}
+					else {
+						return $null
+					}
+				}
+				
 }
 #
 #	Function Name: extractDate
@@ -273,11 +314,13 @@ function sortedFileConversion($path, $range)
 
         $theObject = New-Object PSObject -Property $props
         
+		<##
         Write-Host ("The range start is " + $range.start)
         Write-Host ("The range end is " + $range.end)
         Write-Host ("The folder's date is " + $date)
         Write-Host ("The path is " + $path)
-
+		##>
+		
         if($date -ge $range.start -and $date -le $range.end)
         {
             $foldersArray += $theObject
@@ -288,12 +331,32 @@ function sortedFileConversion($path, $range)
        
        Get-ChildItem -Path $_.Path -Recurse | Where-Object {$_.PSIsContainer -eq $false -and $_.Extension -eq ".avi"} | ForEach-Object {
        
-        startConvertProcessOnVideo $_
+	   $existsBool = testIfVideoExists $_
+	   
+	    if($existsBool -eq $true)
+	    {
+			$existsMessage = ("The file at path " + $_.FullName + " already exists, will not convert this file.")
+			
+			Write-Host $existsMessage
+		}
+		else
+		{
+		
+			startConvertProcessOnVideo $_ $range
+	    }
         }
     }
 
 }
-function startConvertProcessOnVideo($path)
+function testIfVideoExists($path)
+{
+	$newName = [io.path]::ChangeExtension($path.FullName, '.mp4')
+	
+	$existsBool = Test-Path $newName
+	
+	return $existsBool
+}
+function startConvertProcessOnVideo($path, $range)
 {
 	$newVideo = [io.path]::ChangeExtension($path.FullName, '.mp4')
 	
@@ -303,7 +366,7 @@ function startConvertProcessOnVideo($path)
 
 	Write-Host $convertMessage
 
-	Start-Process -FilePath "C:\Users\arfv2b\Downloads\ffmpeg\ffmpeg-20140609-git-958168d-win64-static\bin\ffmpeg.exe" -ArgumentList $ArgumentList -Wait -NoNewWindow;
+	Start-Process -FilePath $range.ffmpegPath -ArgumentList $ArgumentList -Wait -NoNewWindow;
 }
 # Main program
  
