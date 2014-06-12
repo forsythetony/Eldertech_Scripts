@@ -244,16 +244,29 @@ function extractDateFromFolder2($folderName)
  
     $dateTokens = $folderName -split "_"
  
-                if ($dateTokens.Count -ne 3)
-                {
-                                return $null
+		if ($dateTokens.Count -ne 3) {
+					
+					return $null
+					
                 }
+				else {
+				
+					$thirdToken = $dateTokens[2]
+					
+					if($thirdToken.length -ne 4)
+					{
+					
+						$dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
                
-                $dateString = ($dateTokens[0] + "/" + $dateTokens[1] + "/" + $dateTokens[2])
+						$dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
                
-                $dateObject = [dateTime]::ParseExact($dateString, "MM/dd/yyyy" , $null)
-               
-                return $dateObject
+						return $dateObject
+					}
+					else {
+						return $null
+					}
+				}
+				
 }
 #
 #	Function Name: extractDate
