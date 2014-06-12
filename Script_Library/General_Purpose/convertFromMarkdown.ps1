@@ -17,8 +17,9 @@
         $recurseCheck = checkYesNoOption $recurseBool
     }
 
-    $userInput = @{ "path" = $pathToFiles;
-                    "recurse" = $recurseCheck;
+    $userInput = @{ "path"          = $pathToFiles;
+                    "recurse"       = $recurseCheck;
+                    "pandocPath"    = "somePath"; 
                     }
 
     if ($userInput.recurse)
@@ -76,7 +77,9 @@ function checkYesNoOption($recurseBool)
 
     return $null
 }
+function convertMarkdownFiles($userInput)
+{
 
+}
 $userInput = getUserInput
 
-Write-Host "All Good"
